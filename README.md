@@ -1,5 +1,8 @@
 # DISC_TESIS
- 
+
+Eduardo Carrasco Vidal
+_____
+## Bibliografía de Referencia:
 -	Acar, E., Hatipoğlu, S., & Yılmaz, İ. (2023). A quantum algorithm for solving weapon target assignment problem. Engineering Applications of Artificial Intelligence, 125, 106668. https://doi.org/10.1016/j.engappai.2023.106668
 -	Ahuja, R. K., Kumar, A., Jha, K. C., & Orlin, J. B. (2007). Exact and Heuristic Algorithms for the Weapon-Target Assignment Problem. Operations Research, 55(6), 1136-1146. https://doi.org/10.1287/opre.1070.0440
 -	Ahuja, R. K., Kumar, A., Jha, K., & Orlin, J. B. (2003). Exact and Heuristic Methods for the Weapon Target Assignment Problem. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.489802
