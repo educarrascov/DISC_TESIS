@@ -44,4 +44,3 @@ _____
 -	Wacholder, E. (1989). A Neural Network-Based Optimization Algorithm for the Static Weapon-Target Assignment Problem. ORSA Journal on Computing, 1(4), 232-246. https://doi.org/10.1287/ijoc.1.4.232
 -	Wang, T., Fu, L., Wei, Z., Zhou, Y., & Gao, S. (2023). Unmanned ground weapon target assignment based on deep Q-learning network with an improved multi-objective artificial bee colony algorithm. Engineering Applications of Artificial Intelligence, 117, 105612. https://doi.org/10.1016/j.engappai.2022.105612
 -	Yi, X., Yu, H., & Xu, T. (2024). Solving multi-objective weapon-target assignment considering reliability by improved MOEA/D-AM2M. Neurocomputing, 563, 126906. https://doi.org/10.1016/j.neucom.2023.126906
-![image](https://github.com/user-attachments/assets/cb4d8cd8-680b-443a-9a84-eeb52a8876de)
