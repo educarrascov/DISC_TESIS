@@ -1,6 +1,13 @@
-# DISC_TESIS
+# DISC_TESIS <img src="img/logo.png" align="right" width = "95px"/>
 
-Eduardo Carrasco Vidal
+Repositorio creado para el trabajo de **Tesis** en el programa de **Doctorado en Ingeniería de Sistemas Complejos** de la Universidad Adolfo Ibáñez.
+
+Profesor Guía: 
+- Enrique Cannessa. 
+
+Facultad de Ingeniería y Ciencias, UAI.
+
+**Eduardo Carrasco Vidal**
 _____
 Notebook con Código:
 
