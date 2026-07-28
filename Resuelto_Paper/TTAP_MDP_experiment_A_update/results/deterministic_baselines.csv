@@ -1,0 +1,4 @@
+policy,episodes,benefit_mean,benefit_sd,completed_mean,response_time_mean,failures_mean
+Greedy online,30,0.5930769724427806,0.0,26,35.84615384615385,0
+Rolling-horizon matching,30,0.581763443192349,0.0,26,38.84615384615385,0
+Random feasible,30,0.54502855014997,0.020755971584925117,25.066666666666666,35.66620750237417,0
