@@ -1,0 +1,28 @@
+Metadata-Version: 2.4
+Name: ttap-mdp
+Version: 1.0.0
+Summary: Event-driven stochastic TTAP MDP with online baselines and RL adapters
+Requires-Python: >=3.10
+Provides-Extra: notebook
+Requires-Dist: ipykernel>=6.25; extra == "notebook"
+Requires-Dist: jupyterlab>=4.0; extra == "notebook"
+Requires-Dist: matplotlib>=3.8; extra == "notebook"
+Requires-Dist: pandas>=2.0; extra == "notebook"
+Provides-Extra: rl
+Requires-Dist: gymnasium>=1.0; extra == "rl"
+Requires-Dist: stable-baselines3>=2.4; extra == "rl"
+Requires-Dist: sb3-contrib>=2.4; extra == "rl"
+Requires-Dist: tensorboard>=2.15; extra == "rl"
+Requires-Dist: tqdm>=4.66; extra == "rl"
+Requires-Dist: rich>=13.0; extra == "rl"
+Provides-Extra: all
+Requires-Dist: ipykernel>=6.25; extra == "all"
+Requires-Dist: jupyterlab>=4.0; extra == "all"
+Requires-Dist: matplotlib>=3.8; extra == "all"
+Requires-Dist: pandas>=2.0; extra == "all"
+Requires-Dist: gymnasium>=1.0; extra == "all"
+Requires-Dist: stable-baselines3>=2.4; extra == "all"
+Requires-Dist: sb3-contrib>=2.4; extra == "all"
+Requires-Dist: tensorboard>=2.15; extra == "all"
+Requires-Dist: tqdm>=4.66; extra == "all"
+Requires-Dist: rich>=13.0; extra == "all"
