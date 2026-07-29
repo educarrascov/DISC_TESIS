@@ -9,7 +9,6 @@ from .entities import HelicopterStatus, TaskStatus
 from .experiment_a import build_experiment_a_scenario
 from .scenario import Scenario
 
-
 try:
     import gymnasium as gym
     import numpy as np
@@ -52,6 +51,7 @@ class TTAPGymEnv(_GymBase):
         uncertainty: UncertaintyConfig | None = None,
         *,
         invalid_action_penalty: float = 0.0,
+        reward_scale: float = 1.0,
     ) -> None:
         if gym is None:
             raise ImportError(
@@ -60,7 +60,8 @@ class TTAPGymEnv(_GymBase):
         super().__init__()
         self.scenario = scenario
         self.uncertainty = uncertainty or UncertaintyConfig.deterministic()
-        self.invalid_action_penalty = invalid_action_penalty
+        self.invalid_action_penalty = float(invalid_action_penalty)
+        self.reward_scale = float(reward_scale)
         self.simulator = Simulator(
             scenario,
             self.uncertainty,
@@ -68,7 +69,7 @@ class TTAPGymEnv(_GymBase):
             invalid_action_penalty=invalid_action_penalty,
         )
         self.action_space = spaces.Discrete(len(self.simulator.actions))
-        observation_length = 2 + 7 * len(scenario.helicopters) + 9 * len(scenario.tasks)
+        observation_length = 2 + 9 * len(scenario.helicopters) + 9 * len(scenario.tasks)
         self.observation_space = spaces.Box(
             low=0.0,
             high=1.0,
@@ -120,7 +121,7 @@ class TTAPGymEnv(_GymBase):
         result = self.simulator.step(int(action))
         return (
             self._observation(),
-            float(result.reward),
+            self.reward_scale * float(result.reward),
             result.terminated,
             False,
             self._info(),
@@ -140,13 +141,35 @@ class TTAPGymEnv(_GymBase):
             self.simulator.time / horizon,
             min(1.0, self.simulator.cumulative_reward),
         ]
-
+        task_ids = [task.task_id for task in scenario.tasks]
+        task_denominator = max(1, len(task_ids))
+        
         for helicopter in scenario.helicopters:
             state = self.simulator.helicopter_states[helicopter.helicopter_id]
             capacity = helicopter.capacity
+            
+            active_task_value = 0.0
+            destination_node_id = state.node_id
+            
+            if state.active_task_id is not None:
+                active_task = scenario.task_by_id[state.active_task_id]
+                destination_node_id = active_task.node_id
+                active_task_value = (
+                    task_ids.index(state.active_task_id) + 1
+                ) / task_denominator
+
+            elif (
+                state.status is HelicopterStatus.BUSY
+                and state.node_id != scenario.base.node_id
+            ):
+                # BUSY sin tarea activa significa retorno a la base.
+                destination_node_id = scenario.base.node_id
+            
             values.extend(
                 [
                     node_ids.index(state.node_id) / node_denominator,
+                    node_ids.index(destination_node_id) / node_denominator,
+                    active_task_value,
                     state.remaining_resources.cargo / max(1.0, capacity.cargo),
                     state.remaining_resources.medical / max(1.0, capacity.medical),
                     state.remaining_resources.personnel
@@ -163,8 +186,25 @@ class TTAPGymEnv(_GymBase):
             max(h.capacity.personnel for h in scenario.helicopters),
         )
         max_weight = max(task.priority_weight for task in scenario.tasks)
+        
         for task in scenario.tasks:
             state = self.simulator.task_states[task.task_id]
+            
+            if state.status == TaskStatus.UNREVEALED:
+                values.extend(
+                    [
+                        _T_STATUS[TaskStatus.UNREVEALED],
+                        0.0,  # node
+                        0.0,  # cargo
+                        0.0,  # medical
+                        0.0,  # personnel
+                        0.0,  # optimal_time
+                        0.0,  # effective_time
+                        0.0,  # ineffective_time
+                        0.0,  # priority
+                    ]
+                )
+                continue
             values.extend(
                 [
                     _T_STATUS[state.status],
@@ -211,6 +251,7 @@ class ExperimentAFamilyEnv(TTAPGymEnv):
         *,
         sampler_seed: int = 218,
         invalid_action_penalty: float = 0.0,
+        reward_scale: float = 1.0,
     ) -> None:
         if np is None:
             raise ImportError(
@@ -230,6 +271,7 @@ class ExperimentAFamilyEnv(TTAPGymEnv):
             build_experiment_a_scenario(self.n_tasks, self.current_instance_seed),
             uncertainty,
             invalid_action_penalty=invalid_action_penalty,
+            reward_scale=reward_scale,
         )
 
     def reset(
