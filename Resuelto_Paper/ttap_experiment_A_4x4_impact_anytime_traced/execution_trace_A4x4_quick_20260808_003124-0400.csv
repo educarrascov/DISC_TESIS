@@ -1,0 +1,2 @@
+Execution ID,Run ID,Run Correlative,Run Total,Scenario,Tasks,Seed,Started At,Finished At,Elapsed sec,Elapsed HH:MM:SS,Status,Methods Requested,HiGHS Budgets sec,HiGHS Incumbents,HiGHS Certified,RSS GB,Swap GB,Error
+20260808_003124-0400,20260808_003124-0400-0001,1,1,A4x4_T20_S1,20,1,2026-08-08T00:31:24-04:00,2026-08-08T00:31:54-04:00,29.723747332998755,00:00:30,COMPLETED,7,"1,5,15,60,600",3,3,0.3238067626953125,6.5994873046875,
