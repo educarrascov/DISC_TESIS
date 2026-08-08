@@ -1,0 +1,5 @@
+Tasks,Method,Normalized Mission Value,Normalized Mission Value,Physical Completed Tasks,Physical Completed Tasks,Medical Evacuees,Medical Evacuees,Personnel Transported,Personnel Transported,Cargo Delivered kg,Cargo Delivered kg,Average Response Time,Average Response Time,Total Flight Time,Total Flight Time,Runtime sec,Runtime sec,End-to-end sec,End-to-end sec,MIP Gap,MIP Gap
+,,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std
+20,Greedy-Benefit,0.4562900666450066,,13.0,,13.0,,9.0,,350.0,,44.53846153846154,,243.4748223309835,,0.0022188329967320897,,0.002219124999101041,,,
+20,Greedy-Density-Operational,0.4708142531806667,,15.0,,15.0,,11.0,,350.0,,48.86666666666667,,273.69514542900066,,0.0014668330004496966,,0.0014670419986941852,,,
+20,HiGHS-600s,0.5269807318306424,,14.0,,15.0,,9.0,,350.0,,45.42857142857143,,244.3097911628172,,7.338812666999729,,7.497453750002023,,0.0,
