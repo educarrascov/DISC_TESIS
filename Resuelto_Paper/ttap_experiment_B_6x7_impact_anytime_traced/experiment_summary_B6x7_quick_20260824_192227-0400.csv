@@ -1,0 +1,2 @@
+Execution ID,Run Mode,Started At,Finished At,Elapsed sec,Elapsed HH:MM:SS,Scenarios,Task Counts,Seeds,HiGHS Budgets sec,Status
+20260824_192227-0400,quick,2026-08-24T19:22:28-04:00,2026-08-24T19:23:41-04:00,72.91891749999922,00:01:13,1,20,1,"60,120,600,900,1800",COMPLETED
