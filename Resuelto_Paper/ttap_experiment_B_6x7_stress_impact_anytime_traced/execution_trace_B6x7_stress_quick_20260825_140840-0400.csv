@@ -1,0 +1,2 @@
+Execution ID,Run ID,Run Correlative,Run Total,Scenario,Tasks,Seed,Started At,Finished At,Elapsed sec,Elapsed HH:MM:SS,Status,Methods Requested,HiGHS Budgets sec,HiGHS Incumbents,HiGHS Certified,RSS GB,Swap GB,Error
+20260825_140840-0400,20260825_140840-0400-0001,1,1,B6x7_stress_T60_S1,60,1,2026-08-25T14:08:51-04:00,2026-08-25T15:01:19-04:00,3147.9229653999937,00:52:28,COMPLETED,8,"1,5,15,60,600,1800",1,0,0.14687728881835938,1.7459526062011719,
