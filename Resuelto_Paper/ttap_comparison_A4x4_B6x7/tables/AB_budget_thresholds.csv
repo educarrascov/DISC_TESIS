@@ -1,0 +1,21 @@
+Target Percent,Tasks,Configuration,First Tested Budget sec,Right Censored,Maximum Tested Budget sec
+80,20,A: 4 helos × 4 areas,15.0,False,600
+80,20,B: 6 helos × 7 areas,60.0,False,1800
+80,30,A: 4 helos × 4 areas,15.0,False,600
+80,30,B: 6 helos × 7 areas,600.0,False,1800
+80,40,A: 4 helos × 4 areas,60.0,False,600
+80,40,B: 6 helos × 7 areas,1800.0,False,1800
+80,50,A: 4 helos × 4 areas,60.0,False,600
+80,50,B: 6 helos × 7 areas,,True,1800
+80,60,A: 4 helos × 4 areas,600.0,False,600
+80,60,B: 6 helos × 7 areas,,True,1800
+95,20,A: 4 helos × 4 areas,15.0,False,600
+95,20,B: 6 helos × 7 areas,600.0,False,1800
+95,30,A: 4 helos × 4 areas,60.0,False,600
+95,30,B: 6 helos × 7 areas,1800.0,False,1800
+95,40,A: 4 helos × 4 areas,60.0,False,600
+95,40,B: 6 helos × 7 areas,,True,1800
+95,50,A: 4 helos × 4 areas,600.0,False,600
+95,50,B: 6 helos × 7 areas,,True,1800
+95,60,A: 4 helos × 4 areas,600.0,False,600
+95,60,B: 6 helos × 7 areas,,True,1800

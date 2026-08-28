@@ -1,0 +1,11 @@
+Configuration,Tasks,Variables_median,Constraints_median,Nonzeros_median
+A: 4 helos × 4 areas,20,13133.5,5892.5,33532.0
+A: 4 helos × 4 areas,30,29987.0,11788.5,78461.0
+A: 4 helos × 4 areas,40,56594.0,19083.0,150574.5
+A: 4 helos × 4 areas,50,81214.0,25303.5,218379.5
+A: 4 helos × 4 areas,60,126532.5,32340.5,349889.0
+B: 6 helos × 7 areas,20,63923.5,23362.5,168863.0
+B: 6 helos × 7 areas,30,159373.5,55598.5,422558.0
+B: 6 helos × 7 areas,40,384826.0,109266.0,1050523.0
+B: 6 helos × 7 areas,50,575455.0,142804.5,1585707.5
+B: 6 helos × 7 areas,60,941552.5,185902.5,2641163.5
