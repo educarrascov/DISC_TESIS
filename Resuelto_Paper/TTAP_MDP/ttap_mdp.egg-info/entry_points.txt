@@ -1,5 +1,0 @@
-[console_scripts]
-ttap-demo = ttap_mdp.demo:main
-ttap-evaluate-rl = ttap_mdp.training.evaluate_rl:main
-ttap-train-dqn = ttap_mdp.training.train_dqn:main
-ttap-train-ppo = ttap_mdp.training.train_ppo:main

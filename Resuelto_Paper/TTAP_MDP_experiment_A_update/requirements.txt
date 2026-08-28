@@ -1,2 +1,0 @@
-# Complete interactive and reinforcement-learning environment
--e .[all]
