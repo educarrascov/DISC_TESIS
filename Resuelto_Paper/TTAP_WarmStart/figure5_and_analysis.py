@@ -119,7 +119,7 @@ def plot_current(summary, out):
     definitions = [
         ("incumbents_pct", "Feasible incumbent / positive plan (%)", "Blues", 100),
         ("mean_incumbent", "Mean best incumbent (recorded solutions)", "Blues", 1),
-        ("mean_available_shortfall_pct", "Mean available shortfall to certified optimum (%)", "Oranges", 100),
+        ("mean_available_shortfall_pct", "Mean shortfall (%) — incumbent / available plan", "Oranges", 100),
         ("certified_pct", "Certified optimality (%)", "Blues", 100),
     ]
     tasks = sorted(summary["Tasks"].unique())
@@ -142,10 +142,15 @@ def plot_current(summary, out):
                         label = f"{record['incumbents_pct']:.0f}/{record['positive_plans_pct']:.0f}"
                     elif row == 1:
                         label = f"{value:.3f}" if np.isfinite(value) else "n.a."
+                    elif row == 2:
+                        conditional = record["mean_incumbent_shortfall_pct"]
+                        first = f"{conditional:.1f}" if np.isfinite(conditional) else "n.a."
+                        second = f"{value:.1f}" if np.isfinite(value) else "n.a."
+                        label = f"{first}\n{second}"
                     else:
                         label = f"{value:.1f}" if np.isfinite(value) else "n.a."
                     color = "white" if np.isfinite(value) and value > maximum * .65 else "#222222"
-                    ax.text(j, i, label, ha="center", va="center", fontsize=8.0, color=color)
+                    ax.text(j, i, label, ha="center", va="center", fontsize=7.0 if row == 2 else 8.0, color=color)
             ax.set_xticks(range(len(budgets)), [f"{b:g}" for b in budgets])
             ax.set_yticks(range(len(tasks)), [str(t) for t in tasks])
             ax.set_xlabel("Solver time budget (s)")
@@ -159,11 +164,12 @@ def plot_current(summary, out):
                          ha="center", fontsize=11)
             for spine in ax.spines.values():
                 spine.set_visible(False)
-    fig.text(.5, .99, "Availability, incumbent quality, and optimality certification", ha="center", fontsize=11.5)
+    fig.text(.5, .99, "Availability, incumbent quality, and optimality certification", ha="center", va="top", fontsize=11.5)
     fig.text(.05, .075,
              "30 instances per task count. First row: feasible incumbent / positive plan.\n"
-             "Mean incumbent excludes missing solutions (n is reported in the CSV). Shortfall uses a zero-value\n"
-             "idle fallback when no incumbent is recorded. Certified-reference samples: A, n=30 at every size;\n"
+             "Mean incumbent excludes missing solutions (n is reported in the CSV). Shortfalls (upper/lower): incumbent /\n"
+             "available plan, with idle=0 when no incumbent exists. Colour shows available-plan shortfall.\n"
+             "Certified-reference samples: A, n=30 at every size;\n"
              "B, n=30, 30, 27, 21, 9 for 20–60 tasks. Budgets are independent restarts, not one continuous run.",
              fontsize=7.4, ha="left", va="center", color="#444444")
     for extension in ["png", "pdf"]:
