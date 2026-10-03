@@ -106,7 +106,7 @@ python ttap_warm_start.py --experiments B --tasks 20 30 40 50 60 --seeds {1..30}
 
 The default is one thread, solver random seed 0, and MIP relative tolerance
 `1e-6`. Each configuration involves 1,800 solver runs. The sum of nominal
-solver allowances is 6.75 hours per configuration, before preparation overhead
+solver allowances is 10.125 hours per configuration (20.25 hours for A and B), before preparation overhead
 and any solver time-limit overrun; early termination can reduce actual time.
 B can require substantial RAM. Do not launch full configurations in parallel
 on a memory-constrained machine. Record hardware, package versions and actual
