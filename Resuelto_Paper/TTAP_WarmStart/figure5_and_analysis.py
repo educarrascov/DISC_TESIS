@@ -226,6 +226,51 @@ def plot_warm(summary, out):
         plt.close(fig)
 
 
+def plot_warm_overview(summary, out):
+    """Compact paper figure; the per-task panels remain diagnostic outputs."""
+    colors = {"Cold": "#6C757D", "GBStart": "#264653", "GDStart": "#2A9D8F"}
+    labels = {"Cold": "HiGHS cold", "GBStart": "HiGHS + Greedy Benefit",
+              "GDStart": "HiGHS + Greedy Density"}
+    configs = sorted(summary["Configuration"].unique())
+    fig, axes = plt.subplots(3, len(configs), figsize=(3.9 * len(configs), 7.7),
+                             squeeze=False, sharey="row", constrained_layout=True)
+    metrics = ["incumbents_pct", "mean_available", "mean_available_shortfall_pct"]
+    for col, config in enumerate(configs):
+        data = summary[summary["Configuration"].eq(config) & summary["Start Method"].isin(colors)]
+        for method in colors:
+            rows = data[data["Start Method"].eq(method)].sort_values("Budget sec")
+            for row, metric in enumerate(metrics):
+                axes[row, col].plot(rows["Budget sec"], rows[metric],
+                                    color=colors[method], marker="o", markersize=4,
+                                    linewidth=1.6, label=labels[method])
+        sizes = data["instances"].unique()
+        suffix = f"n={sizes[0]:g}" if len(sizes) == 1 else "sample sizes vary"
+        axes[0, col].set_title(f"Experiment {config} ({suffix})", fontsize=10)
+        budgets = sorted(data["Budget sec"].unique())
+        for row in range(3):
+            ax = axes[row, col]
+            ax.set_xscale("log")
+            ax.set_xticks(budgets, [f"{x:g}" for x in budgets])
+            ax.grid(axis="y", color="#DDDDDD", linewidth=.6)
+            ax.spines[["top", "right"]].set_visible(False)
+            if row == 2:
+                ax.set_xlabel("Solver time budget (s)")
+    for row, label in enumerate(["Recorded feasible plan (%)", "Mean available value",
+                                 "Shortfall to certified optimum (%)"]):
+        axes[row, 0].set_ylabel(label)
+    axes[0, 0].set_ylim(-3, 103)
+    axes[1, 0].set_ylim(0, 1)
+    axes[2, 0].set_ylim(-3, 103)
+    axes[0, 0].legend(frameon=False, fontsize=7)
+    fig.suptitle("Cold and greedy-initialized HiGHS: pooled task sizes", fontsize=11)
+    fig.supxlabel("Warm rates include validated supplied starts; solver-incumbent rates are in the CSV.\n"
+                  "Shortfalls use certified-reference subsets. Budgets are independent restarts.", fontsize=7)
+    for extension in ["png", "pdf"]:
+        fig.savefig(out / f"Figure_WarmStart_overview.{extension}", dpi=300,
+                    bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--a", type=Path, required=True)
@@ -250,12 +295,15 @@ def main():
         warm = attach_references(warm, reference)
         summary = summarize(warm)
         summary.to_csv(args.output / "warm_summary_by_task.csv", index=False)
+        overall = summarize(warm, include_tasks=False)
+        overall.to_csv(args.output / "warm_summary_overall.csv", index=False)
         warm.to_csv(args.output / "warm_paired_to_certified.csv", index=False)
         paired = paired_warm_differences(warm)
         paired.to_csv(args.output / "warm_vs_cold_paired.csv", index=False)
         paired.groupby(["Configuration", "Tasks", "Start Method", "Budget sec"])["Paired value improvement"].agg(
             ["count", "mean", "median", "std"]).reset_index().to_csv(args.output / "warm_vs_cold_summary.csv", index=False)
         plot_warm(summary, args.output)
+        plot_warm_overview(overall, args.output)
     print(f"Analysis saved in {args.output}")
 
 
