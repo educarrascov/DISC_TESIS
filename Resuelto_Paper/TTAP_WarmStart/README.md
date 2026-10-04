@@ -144,6 +144,12 @@ After the full warm experiment, add
 `--warm-csv runs/A_full/metrics.csv runs/B_full/metrics.csv` to that command.
 It creates the warm-start plots, matched-reference CSV and paired improvements
 over the new cold control automatically. It does not invent absent warm results.
+`Figure_WarmStart_overview.pdf` is the compact A/B figure for the paper; it
+pools task sizes and uses certified-reference subsets for shortfalls. The
+per-task A/B plots are diagnostic outputs, and `warm_summary_by_task.csv`
+retains the stratified results. `warm_summary_overall.csv` supplies the pooled
+sample sizes and solver-incumbent rates. Warm plan availability includes the
+validated supplied start and must not be interpreted as solver discovery.
 
 For the combined-analysis notebook
 `20260828_Comparacion_A_B_4x4_vs_6x7_Presupuesto_Complejidad.ipynb`, replace

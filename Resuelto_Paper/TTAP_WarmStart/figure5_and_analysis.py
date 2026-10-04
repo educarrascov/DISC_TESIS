@@ -208,6 +208,7 @@ def plot_warm(summary, out):
                 budgets = sorted(data["Budget sec"].unique())
                 ax.set_xscale("log")
                 ax.set_xticks(budgets, [f"{x:g}" for x in budgets])
+                ax.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
                 ax.grid(axis="y", color="#DDDDDD", linewidth=.6)
                 ax.spines[["top", "right"]].set_visible(False)
                 if row == 2:
@@ -251,6 +252,7 @@ def plot_warm_overview(summary, out):
             ax = axes[row, col]
             ax.set_xscale("log")
             ax.set_xticks(budgets, [f"{x:g}" for x in budgets])
+            ax.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
             ax.grid(axis="y", color="#DDDDDD", linewidth=.6)
             ax.spines[["top", "right"]].set_visible(False)
             if row == 2:
