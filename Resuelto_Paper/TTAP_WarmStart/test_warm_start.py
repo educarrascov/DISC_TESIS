@@ -63,6 +63,25 @@ class WarmStartTests(unittest.TestCase):
                 frame, _ = kernel["solve_greedy_ttap"](scenario, rule=rule)
                 self.assertAlmostEqual(float(frame["Benefit"].sum()), value, places=6)
 
+    def test_true_trace_and_initial_plan_credit(self):
+        kernel, scenario = self.tiny_scenario("A")
+        package = kernel["prepare_exact_problem"](scenario)
+        frame, _ = kernel["solve_greedy_ttap"](scenario, rule="benefit")
+        start = logs_to_start_vectors(kernel, scenario, package, {"GBStart": frame})["GBStart"]
+        for label, vector in [("Cold", None), ("GBStart", start)]:
+            trace = []
+            result, summary = solve_one(scenario, package, to_highs_lp(package),
+                                        10, label, start=vector, trace=trace)
+            self.assertTrue(summary["Optimal Certified"])
+            self.assertEqual(trace[0]["Elapsed solve wall sec"], 0.0)
+            self.assertTrue(math.isnan(trace[0]["Solver Incumbent Value"]))
+            self.assertTrue(math.isclose(trace[-1]["Available Value"], -result.fun, abs_tol=1e-8))
+            self.assertTrue(all(a["Available Value"] <= b["Available Value"] + 1e-8
+                                for a, b in zip(trace, trace[1:])))
+            if vector is not None:
+                self.assertEqual(trace[0]["Event"], "Validated start available")
+                self.assertTrue(math.isclose(trace[0]["Available Value"], -float(package["c"] @ start)))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

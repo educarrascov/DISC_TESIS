@@ -180,13 +180,15 @@ def to_highs_lp(package):
 def solve_one(scenario, package, lp, budget, label, start=None,
               heuristic_time=0.0, mapping_time=0.0, lp_time=0.0,
               threads=1, solver_seed=0, mip_rel_gap=1e-6, verbose=False,
-              previous_solver_time=0.0, previous_budget=0.0, previous_end_to_end=0.0):
+              previous_solver_time=0.0, previous_budget=0.0, previous_end_to_end=0.0,
+              trace=None):
     """One fresh solver per budget; no state is carried between budgets.
 
     A validated supplied route remains available if a very short solve stops
     during presolve before returning an incumbent. That fallback is explicitly
     distinguished from an incumbent returned by HiGHS.
     """
+    method = f"HiGHS-{budget:g}s-{label}"
     highs = highspy.Highs()
     for option, value in (("output_flag", bool(verbose)), ("time_limit", float(budget)),
                           ("mip_rel_gap", float(mip_rel_gap)), ("threads", int(threads)),
@@ -212,15 +214,52 @@ def solve_one(scenario, package, lp, budget, label, start=None,
             raise RuntimeError(f"HiGHS could not receive the {label} start")
         submitted = True
 
-    t0 = time.perf_counter()
+    # Optional true incumbent history within THIS run. It never joins restarts.
+    trace_errors = []
+    current_solver_value = np.nan
+    available_envelope = float(start_value) if submitted else 0.0
+
+    def record_trace(event, elapsed, solver_value=np.nan):
+        nonlocal current_solver_value, available_envelope
+        if np.isfinite(solver_value):
+            current_solver_value = (max(current_solver_value, solver_value)
+                                    if np.isfinite(current_solver_value) else solver_value)
+            available_envelope = max(available_envelope, current_solver_value)
+        trace.append({"Scenario": scenario["scenario_id"], "Seed": scenario["seed"],
+                      "Tasks": len(scenario["tasks"]), "Method": method,
+                      "Start Method": label, "Budget sec": float(budget),
+                      "Elapsed solve wall sec": float(elapsed), "Event": event,
+                      "Solver Incumbent Value": current_solver_value,
+                      "Available Value": available_envelope})
+
+    def improving_callback(callback_type, message, data_out, data_in, user_data):
+        candidate = -float(data_out.objective_function_value)
+        if not np.isfinite(candidate) or candidate < -TOL or candidate > 1 + TOL:
+            trace_errors.append(f"Invalid normalized callback value: {candidate}")
+            return
+        record_trace("HiGHS improving incumbent", time.perf_counter() - solve_start,
+                     candidate)
+
+    if trace is not None:
+        record_trace("Validated start available" if submitted else "Idle fallback available", 0.0)
+        if highs.setCallback(improving_callback, None) != highspy.HighsStatus.kOk:
+            raise RuntimeError("Could not register the incumbent callback")
+        if highs.startCallback(highspy.cb.HighsCallbackType.kCallbackMipImprovingSolution) != highspy.HighsStatus.kOk:
+            raise RuntimeError("Could not activate the incumbent callback")
+
+    t0 = solve_start = time.perf_counter()
     status = highs.run()
     solver_wall_time = time.perf_counter() - t0
+    if trace_errors:
+        raise RuntimeError("; ".join(trace_errors))
     if status not in (highspy.HighsStatus.kOk, highspy.HighsStatus.kWarning):
         raise RuntimeError(f"HiGHS failed: {status}")
     info, solution, model_status = highs.getInfo(), highs.getSolution(), highs.getModelStatus()
     solver_has = (bool(solution.value_valid) and
                   info.primal_solution_status == highspy.SolutionStatus.kSolutionStatusFeasible)
     solver_value = float(-info.objective_function_value) if solver_has else np.nan
+    if trace is not None:
+        record_trace("Solve finished", solver_wall_time, solver_value)
     vector = np.asarray(solution.col_value, dtype=float) if solver_has else None
     if vector is not None:
         validate_vector(package, vector)
@@ -238,12 +277,14 @@ def solve_one(scenario, package, lp, budget, label, start=None,
     if np.isfinite(dual) and has_available and dual < value - TOL:
         raise AssertionError("Upper bound is below the validated feasible value")
 
-    method = f"HiGHS-{budget:g}s-{label}"
     end_to_end = (package["graph_time"] + package["matrix_time"] + heuristic_time +
                   mapping_time + lp_time + model_load_time + submission_time + solver_wall_time)
     summary = {
         "Scenario": scenario["scenario_id"], "Method": method, "Start Method": label,
         "Warm Start Submitted": submitted, "Warm Start Value": start_value,
+        "Improvement Over Supplied Plan": value - start_value if submitted else np.nan,
+        "Solver Improved Supplied Plan": bool(submitted and solver_has and solver_value > start_value + TOL),
+        "Trace Enabled": trace is not None,
         "Solver Has Incumbent": solver_has, "Solver Incumbent Value": solver_value,
         "Has Incumbent": has_available, "Available Plan Source": available_source,
         "Has Positive Plan": bool(has_available and value > 1e-10),
@@ -299,7 +340,7 @@ def run_instance(kernel, args, experiment, tasks, seed, directory):
     kernel["validate_scenario_structure"](scenario)
     kernel["validate_temporal_satisfaction"](scenario)
     fingerprint = scenario_fingerprint(scenario)
-    rows, route_frames, greedy_logs, greedy_times = [], [], {}, {}
+    rows, route_frames, greedy_logs, greedy_times, trace_rows = [], [], {}, {}, []
     for label, rule in (("GBStart", "benefit"), ("GDStart", "density_operational")):
         frame, summary = kernel["solve_greedy_ttap"](scenario, rule=rule)
         kernel["validate_solution_consistency"](scenario, frame, summary["Method"])
@@ -349,7 +390,8 @@ def run_instance(kernel, args, experiment, tasks, seed, directory):
                 mip_rel_gap=args.mip_rel_gap, verbose=args.verbose,
                 previous_solver_time=float(replay[1]["Solver Time sec"]) if label == "ReplayStart" else 0.0,
                 previous_budget=float(replay[1]["Time Limit sec"]) if label == "ReplayStart" else 0.0,
-                previous_end_to_end=float(replay[1]["End-to-end sec"]) if label == "ReplayStart" else 0.0)
+                previous_end_to_end=float(replay[1]["End-to-end sec"]) if label == "ReplayStart" else 0.0,
+                trace=trace_rows if args.trace else None)
             kernel["validate_exact_incumbent"](result, summary, package)
             frame = kernel["decode_exact_solution"](scenario, result, package["all_arcs"], summary["Method"])
             kernel["validate_solution_consistency"](scenario, frame, summary["Method"])
@@ -368,6 +410,10 @@ def run_instance(kernel, args, experiment, tasks, seed, directory):
                                     model_sha256=np.array(signature),
                                     scenario_sha256=np.array(fingerprint))
             pd.DataFrame(rows).to_csv(directory / "metrics_partial.csv", index=False)
+            if args.trace:
+                traced = pd.DataFrame(trace_rows)
+                traced["Configuration"] = experiment
+                traced.to_csv(directory / "trace.csv", index=False)
             print(f"  {summary['Method']}: value={row['Normalized Mission Value']:.6g}; "
                   f"solver incumbent={summary['Solver Has Incumbent']}; "
                   f"certified={summary['Optimal Certified']}; "
@@ -393,6 +439,8 @@ def main():
     parser.add_argument("--solver-seed", type=int, default=0)
     parser.add_argument("--mip-rel-gap", type=float, default=1e-6)
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--trace", action="store_true",
+                        help="Record improving-incumbent callbacks within each independent solve")
     parser.add_argument("--replay-logs", type=Path)
     parser.add_argument("--replay-metrics", type=Path)
     parser.add_argument("--replay-method")
@@ -443,6 +491,10 @@ def main():
                 outputs.append(run_instance(kernel, args, experiment, tasks, seed, directory))
                 pd.concat(outputs, ignore_index=True).to_csv(args.output / "metrics_partial.csv", index=False)
     pd.concat(outputs, ignore_index=True).to_csv(args.output / "metrics.csv", index=False)
+    if args.trace:
+        paths = sorted(args.output.glob("*/trace.csv"))
+        pd.concat([pd.read_csv(path) for path in paths], ignore_index=True).to_csv(
+            args.output / "trace.csv", index=False)
     print(f"Completed. Results: {args.output / 'metrics.csv'}")
 
 

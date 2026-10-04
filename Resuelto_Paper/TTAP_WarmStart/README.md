@@ -68,7 +68,7 @@ Use a separate Python 3.12 environment. The tested package versions are pinned.
 python -m venv .venv-ttap-warm
 source .venv-ttap-warm/bin/activate
 python -m pip install -r requirements.txt
-python test_warm_start.py
+python -m unittest discover -p 'test_*.py' -v
 ```
 
 Tests compare the native model against SciPy on small instances, validate
@@ -136,20 +136,118 @@ Use these exact historical files from the repository, not a partial/quick CSV:
 * A: `../ttap_experiment_A_4x4_impact_anytime_traced/metrics_A4x4_paper_20260808_112401-0400_matched_v3_impact_anytime.csv`
 * B: `../ttap_experiment_B_6x7_stress_impact_anytime_traced/metrics_B6x7_stress_paper_20260825_195505-0400_matched_v3_impact_anytime_old6x7_operational_config.csv`
 
+The new `visual_options.py` offers five alternatives to the earlier heatmap.
+Each uses the same CSVs and exports PNG/PDF figures plus the underlying paired
+and summary data. No solver run is needed:
+
+```bash
+python visual_options.py --option all --output figures/options
+```
+
+| Option | Layout | Main use |
+| --- | --- | --- |
+| `1` | Original five certification panels, plus three separate companion figures | Preserve the original Figure 5; choose a companion or table for the paper |
+| `2` | Four large A/B line panels, pooling task counts | Clear overview for an email; task-size effects are pooled |
+| `3` | One card per task count, with separate availability/value/shortfall axes | Inspect how each size behaves; taller than the original figure |
+| `4` | Availability/certification bars and incumbent/shortfall distributions | Inspect variability and zero-value incumbents; useful for an appendix |
+| `5` | Original five certification panels above a short numerical table | Recommended compact alternative for the paper |
+
+To generate only the selected option, use `--option 5`, for example. Use
+`--stat median` to replace the conditional means with medians in options 1,
+2, 3 and 5. Option 4 always displays both, with its distribution.
+Option 5 also exports a booktabs `option5_table.tex`; add `\usepackage{booktabs}`
+if it is not already loaded. Its certification figure can be used separately
+from the table by selecting option 1's main image.
+
+The combined-analysis notebook's AB1 plotting cell can call this script after
+its data-loading cell. Keep the historical CSVs unchanged. The new notebook
+`20261004_Figure5_Visual_Options.ipynb` provides a selector and separate controls
+for historical charts, a functional warm-start example, and a new experiment.
+
+These are independent restarts. A line joining budget summaries does not
+reconstruct one search. Missing incumbents remain missing in the mean/median
+incumbent and its shortfall. At 1 s, A's zero mean shortfall uses only two
+returned incumbents out of 150 runs. The figure's availability row and the
+CSV sample counts are essential to interpret this result.
+
+### Warm-start plots and attribution
+
+Run the matched cold, GB-start and GD-start experiment on the same machine,
+then use `warm_visual_options.py`. Historical optima are quality references;
+historical cold runtimes are not controls for a new warm run.
+
+```bash
+python warm_visual_options.py --warm-csv runs/A_full/metrics.csv runs/B_full/metrics.csv --output figures/warm
+```
+
+Three comparisons are generated:
+
+1. `warm1_greedy_and_higher_budget_plans`: solver-returned incumbent rate,
+   available benefit and known-optimum shortfall. The two pure greedy values
+   appear as dashed baselines. A validated supplied start guarantees plan
+   availability even if search adds no benefit.
+2. `warm2_credit_to_greedy_vs_injection`: warm value minus its supplied greedy;
+   and warm value minus `max(new cold value, same greedy)`. The second control
+   asks whether injection helps beyond retaining that greedy externally while
+   running HiGHS without a start. Negative differences are retained.
+3. `warm3_setup_cost_and_quality`: measured preparation/start/solve costs and
+   quality against actual measured time. Solver allowances are not guaranteed
+   response deadlines. The timing excludes later decoding/reporting and
+   fingerprint overhead.
+
+The default analysis requires all five task counts and 30 seeds at 1, 5, 15
+and 60 s for each configuration supplied. Partial cohorts require
+`--allow-partial` and are labelled as functional pilots. The source commit,
+objective, model/scenario fingerprints and solver settings are checked.
+Sample counts and paired differences are exported for subsequent inference.
+
+For a reproducible view of the completed one-instance pilot:
+
+```bash
+python warm_visual_options.py --warm-csv examples/functional_pilot_n1_20261004/metrics.csv --allow-partial --trace-csv examples/functional_pilot_n1_20261004/trace.csv --trace-scenario A4x4_T20_S1 --trace-budget 60 --output figures/pilot
+python test_visual_options.py
+```
+
+That pilot has **one seed and 20 tasks per configuration**, with 24 solver runs.
+A reaches the same certified optimum in all three treatments at 15 and 60 s.
+B's starts retain their greedy values and the cold runs return no incumbent.
+The incremental benefit of injection against cold plus the same greedy is
+zero at every tested allowance. These checks validate the method; they do not
+establish a general warm-start advantage. B's 60 s allowance also overran in
+this execution: inspect the measured times rather than treating it as a hard
+deadline.
+
+### True within-run incumbent history
+
+Use `--trace` when launching a new experiment to log the native improving-MIP
+callback. It adds a `trace.csv` per instance and an aggregate at the output
+root. An explicit initial event credits the supplied greedy or idle fallback;
+it does not credit HiGHS with discovering that plan at time zero.
+
+```bash
+python ttap_warm_start.py --experiments A B --tasks 20 --seeds 1 --budgets 1 5 15 60 --trace --output runs/new_trace_pilot
+python warm_visual_options.py --warm-csv runs/new_trace_pilot/metrics.csv --allow-partial --trace-csv runs/new_trace_pilot/trace.csv --trace-scenario A4x4_T20_S1 --trace-budget 60 --output figures/new_trace_pilot
+```
+
+`warm4_true_incumbent_trace` shows one instance and one run per treatment.
+Its clock starts after model/start preparation. The trace is a separate view
+from independently restarted budget summaries. See the official
+[HiGHS callback documentation](https://ergo-code.github.io/HiGHS/dev/callbacks/).
+
+`--trace` changes the execution manifest. Use a new output directory rather
+than attempting to resume an old run with a different setting.
+
+The older `figure5_and_analysis.py` remains available for reproducing the
+previous heatmaps and is shared by the new statistical scripts:
+
 ```bash
 python figure5_and_analysis.py --a ../ttap_experiment_A_4x4_impact_anytime_traced/metrics_A4x4_paper_20260808_112401-0400_matched_v3_impact_anytime.csv --b ../ttap_experiment_B_6x7_stress_impact_anytime_traced/metrics_B6x7_stress_paper_20260825_195505-0400_matched_v3_impact_anytime_old6x7_operational_config.csv --output figures/current
 ```
 
-After the full warm experiment, add
-`--warm-csv runs/A_full/metrics.csv runs/B_full/metrics.csv` to that command.
-It creates the warm-start plots, matched-reference CSV and paired improvements
-over the new cold control automatically. It does not invent absent warm results.
-`Figure_WarmStart_overview.pdf` is the compact A/B figure for the paper; it
-pools task sizes and uses certified-reference subsets for shortfalls. The
-per-task A/B plots are diagnostic outputs, and `warm_summary_by_task.csv`
-retains the stratified results. `warm_summary_overall.csv` supplies the pooled
-sample sizes and solver-incumbent rates. Warm plan availability includes the
-validated supplied start and must not be interpreted as solver discovery.
+The older script also accepts `--warm-csv` and exports its original warm
+overview and per-task summaries. Use `warm_visual_options.py` for the current
+comparison: it additionally separates improvement over the greedy from the
+incremental benefit of injection against a cold run with that same fallback.
 
 For the combined-analysis notebook
 `20260828_Comparacion_A_B_4x4_vs_6x7_Presupuesto_Complejidad.ipynb`, replace
@@ -226,7 +324,8 @@ Do not add warm treatments indiscriminately to every old plot.
 
 * Keep A/B quality and runtime tables and their full-budget figures as the
   original benchmark, if the objective and instances are unchanged.
-* Replace Figure 5 with availability, incumbent value and certified shortfall.
+* Preserve Figure 5's certification curves; choose a companion figure or the
+  compact table from options 1/5 for availability, value and known-optimum shortfall.
 * Add one compact warm-start comparison subsection/figure after that analysis.
 * Network-size figures do not change: initial solutions do not add variables
   or constraints.
