@@ -43,3 +43,18 @@ python -m unittest discover -p 'test_*.py' -v
 El código publicado no incluye nuevos resultados, conjuntos GPS, manuscritos
 ni comentarios de revisión. Los datos originales permanecen en sus rutas
 publicadas; cada usuario guarda sus nuevas corridas localmente.
+
+## Si apareció «Notebook and runtime differ»
+
+Descargar de nuevo ambos notebooks desde la rama publicada y reiniciar el
+kernel antes de ejecutar las celdas. La revisión inicial contenía tres hashes
+calculados con una línea en blanco adicional al final de los módulos frozen.
+La versión corregida verifica los bytes publicados y usa una carpeta aislada.
+También acepta CRLF al copiar desde un checkout de Windows. Una versión local
+distinta se conserva y se utiliza la revisión fijada del repositorio.
+
+No eliminar la verificación ni editar los archivos frozen para hacerla pasar.
+Si se corta una descarga, volver a ejecutar la primera celda; se conservan los
+archivos válidos y se reintentan los que faltan. Después de cargar módulos de
+otra carpeta, reiniciar el kernel antes de continuar. El modelo y los
+parámetros experimentales no cambian con esta corrección.
