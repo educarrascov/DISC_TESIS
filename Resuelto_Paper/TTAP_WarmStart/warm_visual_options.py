@@ -214,6 +214,8 @@ def warm3_setup_and_quality(new, initial, out, partial):
                                      "Native Model Conversion sec", "Model Load sec"]].sum(axis=1)
     data["Start handling"] = data[["Heuristic Time sec", "Warm Start Mapping sec",
                                   "Start Submission sec"]].sum(axis=1)
+    if "Start Validation sec" in data:
+        data["Start handling"] += data["Start Validation sec"].fillna(0.)
     data["Solve"] = data["Solver Time sec"]
     measured = data[["Model preparation", "Start handling", "Solve"]].sum(axis=1)
     if not np.allclose(measured, data["End-to-end sec"], atol=1e-7, rtol=1e-7):

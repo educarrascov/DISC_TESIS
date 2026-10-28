@@ -188,6 +188,11 @@ def solve_one(scenario, package, lp, budget, label, start=None,
     during presolve before returning an incumbent. That fallback is explicitly
     distinguished from an incumbent returned by HiGHS.
     """
+    validation_time = 0.0
+    if start is not None:
+        validation_started = time.perf_counter()
+        start = validate_vector(package, start)
+        validation_time = time.perf_counter() - validation_started
     method = f"HiGHS-{budget:g}s-{label}"
     highs = highspy.Highs()
     for option, value in (("output_flag", bool(verbose)), ("time_limit", float(budget)),
@@ -278,7 +283,7 @@ def solve_one(scenario, package, lp, budget, label, start=None,
         raise AssertionError("Upper bound is below the validated feasible value")
 
     end_to_end = (package["graph_time"] + package["matrix_time"] + heuristic_time +
-                  mapping_time + lp_time + model_load_time + submission_time + solver_wall_time)
+                  mapping_time + validation_time + lp_time + model_load_time + submission_time + solver_wall_time)
     summary = {
         "Scenario": scenario["scenario_id"], "Method": method, "Start Method": label,
         "Warm Start Submitted": submitted, "Warm Start Value": start_value,
@@ -297,6 +302,7 @@ def solve_one(scenario, package, lp, budget, label, start=None,
         "Solver Message": highs.modelStatusToString(model_status),
         "Solver Status Code": int(model_status), "Time Limit sec": float(budget),
         "Heuristic Time sec": heuristic_time, "Warm Start Mapping sec": mapping_time,
+        "Start Validation sec": validation_time,
         "Native Model Conversion sec": lp_time, "Model Load sec": model_load_time,
         "Start Submission sec": submission_time,
         "Solver Time sec": solver_wall_time, "HiGHS Internal Time sec": highs.getRunTime(),

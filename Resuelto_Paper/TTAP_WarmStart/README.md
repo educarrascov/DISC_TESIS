@@ -1,5 +1,10 @@
 # TTAP: greedy MIP starts and budget-quality reporting
 
+For the executable A/B notebooks dated 2026-10-28, use
+[EJECUTAR_NOTEBOOKS.md](EJECUTAR_NOTEBOOKS.md) and `requirements_execution.txt`.
+They support explicit primary/multidimensional objectives and new references.
+The sections below retain the original primary-output companion workflow.
+
 This companion is based on commit `07dd90042822e2cab84209fe81c9f31ecfe230a8` of
 `educarrascov/DISC_TESIS`. It preserves the implemented single-primary-output
 objective, references `(3, 3, 500)`, generators, greedy rules, time grid, and MILP.
