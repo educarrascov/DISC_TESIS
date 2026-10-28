@@ -1,0 +1,39 @@
+{
+  "settings": {
+    "experiments": [
+      "A",
+      "B"
+    ],
+    "tasks": [
+      20
+    ],
+    "seeds": [
+      1
+    ],
+    "budgets": [
+      1.0,
+      5.0,
+      15.0,
+      60.0
+    ],
+    "threads": 1,
+    "solver_seed": 0,
+    "mip_rel_gap": 1e-06,
+    "verbose": false,
+    "trace": true,
+    "replay_logs": null,
+    "replay_metrics": null,
+    "replay_method": null,
+    "allow_oracle_replay": false
+  },
+  "source_commit": "07dd90042822e2cab84209fe81c9f31ecfe230a8",
+  "objective_version": "primary-output_matched-v3_fixed-references-3-3-500",
+  "highs": "1.11.0",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "scipy": "1.17.0",
+  "frozen_source_sha256": "87db498108b4f8e8599678eedb10ae49b4333f4c7b015e5de7cc461cdb101a6c",
+  "runner_sha256": "4da71891cb87dae092bdcc31c628326880d282a30911a05dd5ddb49923f04d67"
+}
