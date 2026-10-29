@@ -17,11 +17,14 @@ import pandas as pd
 
 
 def booleans(series):
-    text = series.astype(str).str.lower().str.strip()
-    known = text.isin(["true", "false", "1", "0", "nan", "none", ""])
+    # Nullable string arrays retain missing values when converted with astype(str)
+    # in newer pandas releases. Normalize them explicitly before checking tokens.
+    # Empty flags occur on heuristic rows; missing objective values stay missing.
+    text = series.astype("string").str.lower().str.strip().fillna("")
+    known = text.isin(["true", "false", "1", "0", "1.0", "0.0", "nan", "none", ""])
     if not known.all():
         raise ValueError(f"Unexpected boolean values: {text[~known].unique()}")
-    return text.isin(["true", "1"])
+    return text.isin(["true", "1", "1.0"]).astype(bool)
 
 
 def prepare(frame, configuration=None):
