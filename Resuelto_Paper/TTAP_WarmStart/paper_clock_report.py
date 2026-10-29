@@ -13,7 +13,8 @@ import numpy as np
 import pandas as pd
 
 from paper_a_report import (COLORS, LABELS, MARKERS, NATIVE, PUBLICATION_STYLE, STYLES,
-                            _axis, _benchmark, _budgets, _pilot_label, _save,
+                            PAPER_DPI, FIGURE_SIZES, _axis, _benchmark, _budgets,
+                            _budget_axis, _pilot_label, _save,
                             prepare_paper_data)
 from study_analysis import KEYS
 
@@ -93,7 +94,7 @@ def clock_summaries(detail, by_task=False):
     return result
 
 
-def export_clock_quality(run_directory, experiment='A', png_dpi=1200, allow_pilot=False, data=None):
+def export_clock_quality(run_directory, experiment='A', png_dpi=PAPER_DPI, allow_pilot=False, data=None):
     root = Path(run_directory)
     if data is None:
         data = prepare_paper_data(pd.read_csv(root/'metrics.csv'),
@@ -106,7 +107,7 @@ def export_clock_quality(run_directory, experiment='A', png_dpi=1200, allow_pilo
     overall.to_csv(output/'clock_quality_overall.csv', index=False)
     by_task.to_csv(output/'clock_quality_by_task.csv', index=False)
     with plt.rc_context(PUBLICATION_STYLE):
-        fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.8))
+        fig, axes = plt.subplots(1, 3, figsize=FIGURE_SIZES['budget_overview'])
         fig.subplots_adjust(left=.07, right=.99, bottom=.24, top=.78, wspace=.35)
         definitions = [('available_plans_pct', 'Observed available plans (%)', 100),
                        ('mean_available_value', 'Mean available benefit', 1),
@@ -116,8 +117,7 @@ def export_clock_quality(run_directory, experiment='A', png_dpi=1200, allow_pilo
                 rows = overall[overall['Start Method'].eq(method)]
                 ax.plot(rows['Elapsed solve wall sec'], rows[column], color=COLORS[method],
                         marker=MARKERS[method], markersize=3, linewidth=1., linestyle=STYLES[method])
-            ax.set_xscale('log')
-            ax.set_xticks(_budgets(data), [f'{b:g}' for b in _budgets(data)], rotation=45)
+            _budget_axis(ax, _budgets(data))
             ax.set_xlabel('Elapsed solve wall time (s)')
             ax.set_ylabel(label)
             ax.set_ylim(-.025*maximum, 1.05*maximum)

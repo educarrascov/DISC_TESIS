@@ -1,3 +1,7 @@
+> Estilo de publicación: ambos notebooks comienzan en full y exportan PNG
+> a 2000 dpi. La carpeta de corrida es `ttap_runs_paper_2000dpi`.
+> Ver [GRAFICOS_PAPER.md](GRAFICOS_PAPER.md) para ejecución y formato de figuras.
+
 # Experimento A para reemplazar la sección 4.1
 
 El notebook `20261028_Experimento_A_WarmStart.ipynb` ejecuta ahora el perfil
@@ -66,7 +70,7 @@ incluye construcción, conversión, carga y búsqueda, más los costos del start
 `A3` y `A9` a `A12` conservan el diseño por tamaño de tareas y sirven para la
 sección 4.3: certificación, factibilidad devuelta, incumbent, distancia al óptimo
 y aporte de inyectar el greedy frente a cold que conserva ese mismo respaldo.
-Se exportan PDF y SVG vectoriales, PNG de 1200 dpi y una vista previa de 240 dpi.
+Se exportan PDF y SVG vectoriales, PNG de 2000 dpi y una vista previa de 240 dpi.
 El notebook muestra SVG. El PDF es el archivo que se usa en Overleaf. Líneas
 y marcadores más finos reducen el peso visual sin interpolar ni cambiar datos.
 El notebook `20261029_Reexportar_Experimento_A_Paper.ipynb` vuelve a generar

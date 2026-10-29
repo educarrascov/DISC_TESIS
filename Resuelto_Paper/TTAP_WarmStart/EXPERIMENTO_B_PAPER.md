@@ -1,3 +1,7 @@
+> Estilo de publicación: ambos notebooks comienzan en full y exportan PNG
+> a 2000 dpi. La carpeta de corrida es `ttap_runs_paper_2000dpi`.
+> Ver [GRAFICOS_PAPER.md](GRAFICOS_PAPER.md) para ejecución y formato de figuras.
+
 # Experimento B para la sección 4.2
 
 El perfil `TTAP-B-paper-six-budgets-v1` usa el generador B original: seis
@@ -10,8 +14,8 @@ no las capacidades máximas de esta flota heterogénea.
 
 1. Descargar `20261028_Experimento_B_WarmStart.ipynb` de la revisión publicada.
 2. Reiniciar el kernel y ejecutar la carga verificada.
-3. Mantener `MODE='pilot'` para comprobar una instancia de 20 tareas.
-4. Si el piloto termina y exporta sin errores, cambiar a `MODE='full'`.
+3. El valor inicial `MODE='full'` ejecuta las 150 instancias.
+4. Para una comprobación corta, cambiar a `MODE='pilot'` antes de resolver.
 5. Conservar la carpeta de resultados y `RESUME=True` para reanudar.
 
 Cold, Benefit start y Density start reciben, cada uno, 1/5/15/60/600/1800 s.
@@ -51,7 +55,7 @@ objetivo, con su número de observaciones. Un mejor valor conocido sin prueba
 de optimalidad no se denomina óptimo. Para comparar A y B bajo igual
 presupuesto, usar el punto común de 600 s, además del benchmark B de 1800 s.
 
-Los PDF y SVG son vectoriales. El PNG usa 1200 dpi por defecto. El notebook
+Los PDF y SVG son vectoriales. El PNG usa 2000 dpi por defecto. El notebook
 muestra SVG. Líneas más finas, marcadores pequeños y bandas tenues mejoran
 la lectura sin interpolar ni modificar los datos. Reexportar no ejecuta HiGHS.
 

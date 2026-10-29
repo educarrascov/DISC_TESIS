@@ -13,6 +13,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+from matplotlib.ticker import NullLocator
 import numpy as np
 import pandas as pd
 
@@ -33,10 +34,18 @@ MARKERS = {'Cold': 'o', 'GreedyBenefit': 'o', 'GreedyDensity': 'o',
 STYLES = {'Cold': '-', 'GreedyBenefit': '--', 'GreedyDensity': '-.',
           'GBStart': '--', 'GDStart': ':'}
 
-# Dimensions are final print sizes. Anti-aliasing changes rendering, not data.
+# Dimensions are final print sizes; the reference notebook used larger canvases.
+# Keep a flatter paper layout and legible labels at the actual column width.
+PAPER_DPI = 2000
+GRAPHICS_VERSION = '20261029.3-paper-2000dpi'
+FIGURE_SIZES = {'quality': (3.5, 2.35), 'effort': (7.2, 3.15),
+                'budget_by_task': (7.2, 2.65), 'attribution': (7.2, 2.8),
+                'budget_overview': (7.2, 2.8)}
 PUBLICATION_STYLE = {'font.family': 'DejaVu Sans', 'font.size': 8,
+                     'figure.dpi': 160, 'savefig.dpi': PAPER_DPI,
                      'axes.labelsize': 8, 'axes.titlesize': 8.5,
-                     'xtick.labelsize': 7, 'ytick.labelsize': 7,
+                     'xtick.labelsize': 7.5, 'ytick.labelsize': 7.5,
+                     'legend.fontsize': 7, 'axes.linewidth': .65,
                      'pdf.fonttype': 42, 'ps.fonttype': 42, 'svg.fonttype': 'none',
                      'lines.antialiased': True, 'patch.antialiased': True,
                      'text.antialiased': True, 'lines.solid_capstyle': 'round',
@@ -214,7 +223,7 @@ def latex_tables(data, output):
 
 
 def _axis(ax):
-    ax.grid(True, which='major', axis='y', linestyle='-', linewidth=.45, color='#DADDE2')
+    ax.grid(True, which='major', axis='y', linestyle='--', linewidth=.45, color='#BFC5CC', alpha=.65)
     ax.grid(False, which='minor')
     ax.tick_params(which='major', width=.6, length=3)
     ax.tick_params(which='minor', width=.4, length=1.8)
@@ -222,6 +231,13 @@ def _axis(ax):
         spine.set_visible(True)
         spine.set_color('#555555')
         spine.set_linewidth(.6)
+
+
+def _budget_axis(ax, budgets):
+    ax.set_xscale('log')
+    ax.set_xticks(budgets, [f'{b:g}' for b in budgets], rotation=45)
+    ax.set_xlim(min(budgets) * .8, max(budgets) * 1.2)
+    ax.xaxis.set_minor_locator(NullLocator())
 
 
 def _save(fig, folder, name, dpi):
@@ -251,7 +267,7 @@ def quality_figure(data, output, dpi):
     coincident = (native['Optimal Certified'].all() and len(wide) > 0
                   and np.allclose(wide['Cold'], wide['GBStart'], atol=1e-6, rtol=0)
                   and np.allclose(wide['Cold'], wide['GDStart'], atol=1e-6, rtol=0))
-    fig, ax = plt.subplots(figsize=(3.5, 2.8), layout='constrained')
+    fig, ax = plt.subplots(figsize=FIGURE_SIZES['quality'], layout='constrained')
     for method in ORDER:
         if coincident and method in ('GBStart', 'GDStart'):
             continue
@@ -259,7 +275,7 @@ def quality_figure(data, output, dpi):
         label = f'HiGHS variants ({_benchmark(data):g} s)' if coincident and method == 'Cold' else LABELS[method]
         x, y = rows['Tasks'].to_numpy(), rows['benefit_mean'].to_numpy()
         ax.plot(x, y, marker=MARKERS[method], linestyle=STYLES[method], color=COLORS[method],
-                markersize=3.1, linewidth=1.05, markeredgewidth=.45, label=label)
+                markersize=3., linewidth=1.1, markeredgewidth=.4, label=label)
         sd = rows['benefit_sd'].to_numpy()
         if np.isfinite(sd).any():
             ax.fill_between(x, y - sd, y + sd, color=COLORS[method], alpha=.09, linewidth=0)
@@ -268,7 +284,7 @@ def quality_figure(data, output, dpi):
     ax.set_ylim(0, min(1.02, max(.65, float(stats['benefit_mean'].max()) + .15)))
     ax.set_xlabel('Number of tasks')
     ax.set_ylabel('Normalized available benefit')
-    ax.legend(frameon=False, fontsize=6.6, ncol=1, handlelength=2.2)
+    ax.legend(frameon=False, fontsize=6.4, ncol=1, handlelength=2.2, loc='upper right')
     _axis(ax)
     _pilot_label(fig, data['full'])
     _save(fig, output, _figure_name(data, '1_solution_quality_coverage_aware'), dpi)
@@ -280,8 +296,8 @@ def effort_figure(data, output, dpi):
     native['Solver Time sec'] = pd.to_numeric(native['Solver Time sec'])
     if native['Solver Time sec'].isna().any() or native['Solver Time sec'].le(0).any():
         raise ValueError('Positive solver times are required for the logarithmic effort figure')
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
-    fig.subplots_adjust(left=.075, right=.93, bottom=.19, top=.80, wspace=.27)
+    fig, axes = plt.subplots(1, 2, figsize=FIGURE_SIZES['effort'])
+    fig.subplots_adjust(left=.075, right=.93, bottom=.22, top=.78, wspace=.28)
     cmap, norm = plt.get_cmap('viridis'), plt.Normalize(20, 60)
     rng = np.random.default_rng(7)
     for index, method in enumerate(NATIVE):
@@ -326,6 +342,7 @@ def effort_figure(data, output, dpi):
     colorbar = fig.colorbar(matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap), ax=axes[1],
                            fraction=.045, pad=.03)
     colorbar.set_label('Number of tasks', fontsize=8)
+    colorbar.set_ticks(PAPER_TASKS)
     _pilot_label(fig, data['full'])
     _save(fig, output, _figure_name(data, '8_computational_effort'), dpi)
 
@@ -337,7 +354,7 @@ def budget_figures(data, output, dpi):
                    ('mean_solver_incumbent', 'Mean recorded\nsolver benefit', '10_budget_incumbent_value', 1),
                    ('mean_solver_shortfall_pct', 'Mean shortfall to\nknown optimum (%)', '11_budget_optimality_shortfall', 100)]
     for column, ylabel, name, maximum in definitions:
-        fig, axes = plt.subplots(1, 5, figsize=(7.2, 2.65), sharey=True)
+        fig, axes = plt.subplots(1, 5, figsize=FIGURE_SIZES['budget_by_task'], sharey=True)
         fig.subplots_adjust(left=.08, right=.99, bottom=.25, top=.72, wspace=.15)
         for ax, count in zip(axes, PAPER_TASKS):
             for method in NATIVE:
@@ -359,10 +376,8 @@ def budget_figures(data, output, dpi):
                                         color=COLORS[method])
             if not quality['Tasks'].eq(count).any():
                 ax.text(.5, .5, 'Not run', ha='center', transform=ax.transAxes, fontsize=7)
-            ax.set_xscale('log')
-            ax.set_xticks(_budgets(data), [f'{b:g}' for b in _budgets(data)], rotation=45, fontsize=6.5)
-            # A pilot leaves four task panels empty; keep a valid positive log domain.
-            ax.set_xlim(min(_budgets(data)) * .8, max(_budgets(data)) * 1.2)
+            _budget_axis(ax, _budgets(data))
+            ax.tick_params(axis='x', labelsize=6.5)
             ax.set_ylim(-.03 * maximum, 1.05 * maximum)
             ax.set_title(f'{count} tasks', fontsize=8)
             ax.set_xlabel('Solver allowance (s)', fontsize=7)
@@ -375,7 +390,7 @@ def budget_figures(data, output, dpi):
         _save(fig, output, _figure_name(data, name), dpi)
     # The common fallback comparison distinguishes possessing a greedy from injecting it.
     overall = summaries(data['warm'], data['gains'], by_task=False)[1]
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.0), layout='constrained')
+    fig, axes = plt.subplots(1, 2, figsize=FIGURE_SIZES['attribution'], layout='constrained')
     for ax, column, ylabel in zip(axes,
             ('mean_gain_over_greedy', 'mean_injection_gain'),
             ('Gain over initial greedy', 'Injection gain')):
@@ -385,14 +400,13 @@ def budget_figures(data, output, dpi):
             ax.plot(rows['Time Limit sec'], rows[column] * scale, color=COLORS[method], marker=MARKERS[method],
                     markersize=3.1, linewidth=1.0, linestyle=STYLES[method], label=LABELS[method])
         ax.axhline(0, color='gray', linewidth=.8)
-        ax.set_xscale('log')
-        ax.set_xticks(_budgets(data), [f'{b:g}' for b in _budgets(data)], rotation=45)
+        _budget_axis(ax, _budgets(data))
         ax.set_ylabel(ylabel + (' (pp)' if scale == 100 else ''), fontsize=7.5)
         if scale == 100:
             limit = max(.1, 100 * overall[column].abs().max() * 1.3)
             ax.set_ylim(-limit, limit)
         ax.set_xlabel('Solver allowance (s)')
-        ax.legend(fontsize=6.5)
+        ax.legend(fontsize=6.5, frameon=False)
         _axis(ax)
     _pilot_label(fig, data['full'])
     _save(fig, output, _figure_name(data, '12_warm_start_attribution'), dpi)
@@ -413,7 +427,7 @@ def attribution_counts(data):
 def budget_summary_figure(data, output, dpi):
     """Coverage and conditional quality together, with every conditional denominator."""
     overall = summaries(data['warm'], data['gains'], by_task=False)[0]
-    fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.8))
+    fig, axes = plt.subplots(1, 3, figsize=FIGURE_SIZES['budget_overview'])
     fig.subplots_adjust(left=.065, right=.99, top=.78, bottom=.24, wspace=.35)
     defs = [('solver_incumbents_pct', 'Returned incumbents (%)'),
             ('mean_solver_incumbent', 'Mean recorded benefit'),
@@ -429,8 +443,7 @@ def budget_summary_figure(data, output, dpi):
                     ax.annotate(f"n={int(row[ncol])}", (row['Time Limit sec'], row[column]),
                                 xytext=(0, 5), textcoords='offset points', ha='center',
                                 fontsize=5.7, color=COLORS[method])
-        ax.set_xscale('log')
-        ax.set_xticks(_budgets(data), [f'{b:g}' for b in _budgets(data)], rotation=45)
+        _budget_axis(ax, _budgets(data))
         ax.set_xlabel('Solver allowance (s)')
         ax.set_ylabel(label)
         ax.set_ylim(-.025 if column == 'mean_solver_incumbent' else -3,
@@ -592,7 +605,7 @@ Table~\ref{tab:exp''' + experiment + r'''-runtime} includes preparation time.}
     (output / f'Section_4_{number}.tex').write_text('\n\n'.join(paragraphs) + '\n', encoding='utf-8')
 
 
-def export_paper_a(run_directory, png_dpi=1200, allow_pilot=False, *, experiment='A'):
+def export_paper_a(run_directory, png_dpi=PAPER_DPI, allow_pilot=False, *, experiment='A'):
     root = Path(run_directory)
     manifest = json.loads((root / 'manifest.json').read_text())
     raw = pd.read_csv(root / 'metrics.csv')
@@ -620,7 +633,8 @@ def export_paper_a(run_directory, png_dpi=1200, allow_pilot=False, *, experiment
             'solver_runs': len(data['warm']), 'heuristic_runs': len(data['heuristics']),
             'known_certified_optima': len(data['references']), 'coincident_certified_MILP_curves': coincident,
             'objective': data['spec'].as_dict(), 'png_dpi': png_dpi,
-            'graphics_version': '20261029.1', 'vector_formats': ['pdf', 'svg'],
+            'graphics_version': GRAPHICS_VERSION, 'vector_formats': ['pdf', 'svg'],
+            'figure_sizes_inches': FIGURE_SIZES,
             'raw_metrics_sha256': hashlib.sha256((root / 'metrics.csv').read_bytes()).hexdigest(),
             'run_manifest_sha256': hashlib.sha256((root / 'manifest.json').read_bytes()).hexdigest(),
             'data_interpolation_or_smoothing': False,
@@ -636,7 +650,7 @@ def export_paper_a(run_directory, png_dpi=1200, allow_pilot=False, *, experiment
         'Update Section 3.3 and both greedy-score formulas before mixing these values with old results.\n'
         'Use matching objective settings when rerunning B and Talcahuano.\n'
         'Figures 3 and 9-13 support Section 4.3; conditional means/gaps need the coverage counts.\n'
-        'Use PDF in Overleaf and SVG in the notebook. PNG defaults to 1200 dpi.\n'
+        'Use PDF in Overleaf and SVG in the notebook. PNG defaults to 2000 dpi.\n'
         'Re-exporting figures does not run any optimization or change raw data.\n'
         'No CSV, figure or manuscript is uploaded to GitHub by this program.\n')
     result = {'directory': output, 'quality': data['stats'], 'budget_quality': budget_quality,

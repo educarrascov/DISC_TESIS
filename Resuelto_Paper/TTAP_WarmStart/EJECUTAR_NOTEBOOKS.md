@@ -1,3 +1,7 @@
+> Estilo de publicación: ambos notebooks comienzan en full y exportan PNG
+> a 2000 dpi. La carpeta de corrida es `ttap_runs_paper_2000dpi`.
+> Ver [GRAFICOS_PAPER.md](GRAFICOS_PAPER.md) para ejecución y formato de figuras.
+
 # Ejecutar los notebooks del paper
 
 Los notebooks se encuentran en `Resuelto_Paper`. Sus perfiles actuales son:
@@ -5,7 +9,7 @@ Los notebooks se encuentran en `Resuelto_Paper`. Sus perfiles actuales son:
 | Notebook | Modo inicial | Presupuestos de cada tratamiento | Benchmark |
 |---|---|---|---|
 | `20261028_Experimento_A_WarmStart.ipynb` | full | 1/5/15/60/600 s | 600 s |
-| `20261028_Experimento_B_WarmStart.ipynb` | pilot | 1/5/15/60/600/1800 s | 1800 s |
+| `20261028_Experimento_B_WarmStart.ipynb` | full | 1/5/15/60/600/1800 s | 1800 s |
 | `20261029_Reexportar_Experimento_A_Paper.ipynb` | sólo exportación | no optimiza | resultados terminados |
 
 A conserva las 150 instancias de su perfil anterior de cinco presupuestos.
@@ -19,7 +23,7 @@ siguen disponibles por `study_runner.configuration`, fuera de estos notebooks.
 1. Descargar el notebook de la revisión publicada y reiniciar el kernel.
 2. Ejecutar la carga con verificación de integridad.
 3. Revisar `MODE`, objetivo y carpeta de salida antes de optimizar.
-4. Para B, comprobar el piloto y luego cambiar `MODE='full'`.
+4. Ambos notebooks comienzan en full; usar `MODE='pilot'` para una comprobación corta.
 5. Conservar `RESUME=True`, las fuentes y el entorno para reanudar.
 
 Instrucciones y costos nominales:
@@ -27,7 +31,7 @@ Instrucciones y costos nominales:
 Los límites son tiempos de solver, no plazos de respuesta de extremo a extremo.
 
 Para Overleaf usar PDF vectorial. El notebook muestra SVG vectorial y también
-exporta PNG de 1200 dpi. La reexportación no modifica datos ni ejecuta HiGHS.
+exporta PNG de 2000 dpi. La reexportación no modifica datos ni ejecuta HiGHS.
 El perfil A conserva su huella de configuración; cambiar sólo el estilo de
 las figuras no invalida los resultados ya calculados.
 

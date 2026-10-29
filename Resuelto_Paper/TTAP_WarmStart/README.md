@@ -1,6 +1,10 @@
+> Estilo de publicación: ambos notebooks comienzan en full y exportan PNG
+> a 2000 dpi. La carpeta de corrida es `ttap_runs_paper_2000dpi`.
+> Ver [GRAFICOS_PAPER.md](GRAFICOS_PAPER.md) para ejecución y formato de figuras.
+
 > Notebooks actuales del paper: A usa cinco presupuestos y B seis, incluidos
 > 600/1800 s para los tres tratamientos. Ambos exportan PDF/SVG y PNG de
-> 1200 dpi. Hay un notebook de reexportación de A sin optimización.
+> 2000 dpi. Hay un notebook de reexportación de A sin optimización.
 > Ver [EJECUTAR_NOTEBOOKS.md](EJECUTAR_NOTEBOOKS.md),
 > [EXPERIMENTO_A_PAPER.md](EXPERIMENTO_A_PAPER.md) y
 > [EXPERIMENTO_B_PAPER.md](EXPERIMENTO_B_PAPER.md).
