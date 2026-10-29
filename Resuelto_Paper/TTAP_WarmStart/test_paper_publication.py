@@ -10,7 +10,7 @@ import pandas as pd
 from paper_experiment_b import (B_PAPER_BUDGETS, PaperBConfig, paper_b_configuration,
                                 validate_paper_b_grid)
 from paper_a_report import (attribution_counts, latex_tables, prepare_paper_data,
-                            section_fragment, _save, PUBLICATION_STYLE)
+                            section_fragment, _save, PUBLICATION_STYLE, budget_figures)
 from study_runner import manifest_for
 from test_paper_experiment_a import fixture
 
@@ -27,6 +27,16 @@ def b_fixture(mode='full'):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_pilot_budget_figures_preserve_empty_unrun_sizes(self):
+        import matplotlib.pyplot as plt
+        raw, manifest = b_fixture('pilot')
+        data = prepare_paper_data(raw, manifest, True, experiment='B')
+        with tempfile.TemporaryDirectory() as directory, plt.rc_context(PUBLICATION_STYLE):
+            quality, _ = budget_figures(data, Path(directory), 72)
+            self.assertEqual(set(quality['Tasks']), {20})
+            self.assertTrue(quality['n'].eq(1).all())
+            self.assertEqual(len(list(Path(directory).glob('B*.pdf'))), 5)
+
     def test_b_workload_and_no_duplicate_references(self):
         config = paper_b_configuration('full')
         self.assertTrue(config.full_cohort)

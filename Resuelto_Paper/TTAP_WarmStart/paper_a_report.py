@@ -361,6 +361,8 @@ def budget_figures(data, output, dpi):
                 ax.text(.5, .5, 'Not run', ha='center', transform=ax.transAxes, fontsize=7)
             ax.set_xscale('log')
             ax.set_xticks(_budgets(data), [f'{b:g}' for b in _budgets(data)], rotation=45, fontsize=6.5)
+            # A pilot leaves four task panels empty; keep a valid positive log domain.
+            ax.set_xlim(min(_budgets(data)) * .8, max(_budgets(data)) * 1.2)
             ax.set_ylim(-.03 * maximum, 1.05 * maximum)
             ax.set_title(f'{count} tasks', fontsize=8)
             ax.set_xlabel('Solver allowance (s)', fontsize=7)
