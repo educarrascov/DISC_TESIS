@@ -71,7 +71,7 @@ El notebook muestra SVG. El PDF es el archivo que se usa en Overleaf. Líneas
 y marcadores más finos reducen el peso visual sin interpolar ni cambiar datos.
 El notebook `20261029_Reexportar_Experimento_A_Paper.ipynb` vuelve a generar
 las figuras y tablas de una corrida completa sin ejecutar ninguna optimización.
-Si falta la carpeta local, puede recuperar únicamente `metrics.csv` y el
+Si falta la carpeta local, puede recuperar `metrics.csv`, `trace.csv` y el
 manifiesto del resultado publicado, con verificación de integridad.
 
 Las figuras A10/A11 muestran medias condicionadas a disponer de incumbent
@@ -105,3 +105,23 @@ separado en `EXPERIMENTO_B_PAPER.md`.
 
 El programa guarda las nuevas corridas localmente y no publica datos,
 resultados, gráficos ni manuscritos en GitHub.
+
+
+## Reloj observado y límite solicitado
+
+El parámetro `time_limit` de HiGHS puede excederse durante operaciones internas.
+Las figuras A3/A9--A13 comparan reinicios independientes por límite solicitado;
+no describen calidad disponible exactamente a ese tiempo de reloj.
+
+A14 reconstruye otra pregunta: el mejor plan observado a 1/5/15/60/600 s dentro
+DE LA MISMA búsqueda larga de 600 s, por instancia y tratamiento. Sólo usa
+callbacks con timestamp anterior o igual al punto. Acredita el greedy validado
+por separado al inicio y conserva ausentes los incumbents no observados. Incluye
+un CSV de calidad condicional del incumbent y otro de valor disponible sobre
+toda la cohorte. Las brechas usan referencias certificadas posteriores, sin
+entregarlas al solver. La preparación queda fuera del reloj. Los callbacks
+pueden notificarse después del descubrimiento interno; se informa lo observado.
+
+Para responder sobre calidad a un tiempo transcurrido, preferir A14 en la
+sección 4.3. A13 sigue sirviendo para documentar el protocolo de reinicios por
+límite nominal. No combinar ambas curvas como si fueran la misma medición.

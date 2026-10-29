@@ -506,7 +506,8 @@ def section_fragment(data, output, coincident):
                   'compared with three initializations of the same MILP: cold HiGHS, a Benefit '
                   f'start and a Density start. All methods use the {objective} benefit in Section~3.3. '
                   f'Each MILP treatment receives independent solve allowances of {allowances} s. '
-                  f'The {budget:g}-s runs provide the main comparison; Section~4.3 examines shorter budgets.',
+                  f'The {budget:g}-s runs provide the main comparison; Section~4.3 examines shorter budgets. '
+                  'Allowances are HiGHS parameters, not hard wall-clock deadlines.',
                   '',
                   f'At {budget:g} s, cold HiGHS and the Benefit and Density starts certified '
                   f"{int(totals['Cold'])}/150, {int(totals['GBStart'])}/150 and {int(totals['GDStart'])}/150 "
@@ -555,7 +556,7 @@ one sample standard deviation. ''' + overlap + r'''}
         counts = counts[counts['Time Limit sec'].lt(budget)]
         events = int(counts['wins'].sum())
         total = int(counts['n'].sum())
-        paragraphs.append(f"At 1 s, cold returned incumbents in {int(one.loc['Cold','solver_incumbents'])}/150 "
+        paragraphs.append(f"With a 1-s allowance, cold returned incumbents in {int(one.loc['Cold','solver_incumbents'])}/150 "
                           f"instances, compared with {int(one.loc['GBStart','solver_incumbents'])}/150 and "
                           f"{int(one.loc['GDStart','solver_incumbents'])}/150 for the two starts. "
                           'This availability largely reflects the supplied constructive plans. '
@@ -636,5 +637,9 @@ def export_paper_a(run_directory, png_dpi=1200, allow_pilot=False, *, experiment
         'Use PDF in Overleaf and SVG in the notebook. PNG defaults to 1200 dpi.\n'
         'Re-exporting figures does not run any optimization or change raw data.\n'
         'No CSV, figure or manuscript is uploaded to GitHub by this program.\n')
-    return {'directory': output, 'quality': data['stats'], 'budget_quality': budget_quality,
-            'attribution': attribution, 'metadata': meta}
+    result = {'directory': output, 'quality': data['stats'], 'budget_quality': budget_quality,
+              'attribution': attribution, 'metadata': meta}
+    if (root / 'trace.csv').is_file():
+        from paper_clock_report import export_clock_quality
+        result['clock_quality'] = export_clock_quality(root, experiment, png_dpi, allow_pilot, data=data)
+    return result

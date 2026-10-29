@@ -31,6 +31,10 @@ exporta PNG de 1200 dpi. La reexportación no modifica datos ni ejecuta HiGHS.
 El perfil A conserva su huella de configuración; cambiar sólo el estilo de
 las figuras no invalida los resultados ya calculados.
 
+Las trazas permiten la figura A14/B14 de reloj observado dentro de una corrida
+larga. Los otros gráficos por presupuesto usan límites nominales de HiGHS,
+que pueden excederse. No confundir ambas mediciones.
+
 Las corridas se guardan localmente. El código no publica resultados ni manuscritos.
 
 ## Si apareció «Notebook and runtime differ»

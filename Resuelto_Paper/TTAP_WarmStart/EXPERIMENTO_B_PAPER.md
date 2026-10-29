@@ -59,3 +59,9 @@ Antes de integrar B en el manuscrito, comprobar sus 150 instancias, comparar
 los CSV con las tablas y actualizar cualquier frase que aún describa el
 objetivo basado sólo en la clase principal. Los resultados del piloto no
 permiten anticipar las conclusiones de la corrida completa.
+
+
+B14 usa las trazas de cada corrida de 1800 s para reconstruir calidad observada
+por reloj real. No usa resultados futuros ni une los reinicios. El greedy se
+acredita por separado al inicio y la preparación queda fuera del reloj. B3/B9--B13
+siguen representando límites solicitados a HiGHS, que pueden excederse.
