@@ -1,0 +1,35 @@
+{
+  "full_cohort": true,
+  "benchmark_budget_sec": 600.0,
+  "solver_budgets_sec": [
+    1.0,
+    5.0,
+    15.0,
+    60.0,
+    600.0
+  ],
+  "instances": 150,
+  "solver_runs": 2250,
+  "heuristic_runs": 300,
+  "known_certified_optima": 150,
+  "coincident_certified_MILP_curves": true,
+  "objective": {
+    "schema": "ttap-value-v2",
+    "mode": "multidimensional",
+    "weights": {
+      "medical": 2.0,
+      "personnel": 1.5,
+      "cargo": 1.0
+    },
+    "references": {
+      "medical": 3.0,
+      "personnel": 3.0,
+      "cargo": 500.0
+    },
+    "semantics": "distinct-medical-nonmedical-cargo-outputs"
+  },
+  "png_dpi": 600,
+  "quality_estimand": "mean available value on every generated instance; idle=0 if no returned plan",
+  "budget_quality_estimand": "solver-returned incumbents; missing incumbents excluded with counts",
+  "gap_definition": "per-instance shortfall to certified optimum, averaged on known references only"
+}

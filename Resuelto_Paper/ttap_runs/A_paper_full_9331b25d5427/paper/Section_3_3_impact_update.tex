@@ -1,0 +1,26 @@
+% Replace the primary-output part of Section 3.3; keep the existing S_i(t).
+% Apply this definition consistently in A, B and Talcahuano before reporting them together.
+The task quantities represent distinct delivered outputs: medical evacuees,
+non-medical passengers, and kilograms of supplied cargo. Personnel counts
+exclude patients already counted in the medical component; cargo excludes
+their body mass and equipment used only to support the operation.
+The potential value of task $i$ is
+\[
+\phi_i=\lambda_m\frac{m_i}{R_m}
+      +\lambda_p\frac{p_i}{R_p}
+      +\lambda_q\frac{q_i}{R_q}.
+\]
+The weights are $(\lambda_m,\lambda_p,\lambda_q)=(2,1.5,1)$, and the references are $(R_m,R_p,R_q)=(3,3,500)$.
+
+The references are fixed demand-generator scales and remain constant across
+instances and fleet configurations. The weights express compensatory
+preferences; they do not impose absolute medical precedence and have not
+been clinically calibrated. Task classes remain descriptive categories.
+With the temporal satisfaction function $S_i$ defined below, let
+\[
+V=\sum_{j\in I}\phi_j,
+\qquad b_a=\frac{\phi_{i(a)}S_{i(a)}(t_a^f)}{V},\quad a\in A_h^T.
+\]
+Return, recovery and termination arcs have zero benefit. The same coefficients
+are used by both constructive policies and by every MILP initialization strategy.
+% In Section 4, replace w_i eta_i S_i(t)/V by phi_i S_i(t)/V in both greedy scores.

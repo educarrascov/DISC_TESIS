@@ -1,0 +1,37 @@
+\begin{table}[!htbp]
+\centering
+\caption{Experiment A: solution quality and certification at the 600-s MILP budget. Pilot preview; not the 30-replicate study.}
+\label{tab:expA-quality}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Tasks & \makecell{Normalized available\\benefit\\Mean $\pm$ SD} & \makecell{Completed tasks\\Mean $\pm$ SD} & \makecell{Certified\\runs} & \makecell{Shortfall\\(\%)} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel A: HiGHS cold}}\\
+\addlinespace[0.2em]
+20 & $0.5521\; (\mathrm{SD}\;\mathrm{n/a})$ & $13.00\; (\mathrm{SD}\;\mathrm{n/a})$ & $1/1$ & 0.0 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel B: Greedy Benefit}}\\
+\addlinespace[0.2em]
+20 & $0.4292\; (\mathrm{SD}\;\mathrm{n/a})$ & $13.00\; (\mathrm{SD}\;\mathrm{n/a})$ & -- & 22.3 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel C: Greedy Density}}\\
+\addlinespace[0.2em]
+20 & $0.4326\; (\mathrm{SD}\;\mathrm{n/a})$ & $13.00\; (\mathrm{SD}\;\mathrm{n/a})$ & -- & 21.6 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel D: HiGHS + Benefit start}}\\
+\addlinespace[0.2em]
+20 & $0.5521\; (\mathrm{SD}\;\mathrm{n/a})$ & $13.00\; (\mathrm{SD}\;\mathrm{n/a})$ & $1/1$ & 0.0 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel E: HiGHS + Density start}}\\
+\addlinespace[0.2em]
+20 & $0.5521\; (\mathrm{SD}\;\mathrm{n/a})$ & $13.00\; (\mathrm{SD}\;\mathrm{n/a})$ & $1/1$ & 0.0 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\columnwidth}
+\footnotesize
+Means and sample SD summarize the same instances for all five variants. All MILP variants receive 600 s. Shortfalls are computed per instance against a certified optimum of the same model and objective, then averaged; unknown optima are excluded. Every generated instance has a certified reference. Certification denotes HiGHS optimal status at relative MIP tolerance 1e-06; it is not applicable to the greedy policies. SD is unavailable for a one-instance pilot.
+\end{minipage}
+\end{table}

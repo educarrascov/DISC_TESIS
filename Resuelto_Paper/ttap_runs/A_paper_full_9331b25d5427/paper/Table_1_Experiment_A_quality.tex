@@ -1,0 +1,57 @@
+\begin{table}[!htbp]
+\centering
+\caption{Experiment A: solution quality and certification at the 600-s MILP budget.}
+\label{tab:expA-quality}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Tasks & \makecell{Normalized available\\benefit\\Mean $\pm$ SD} & \makecell{Completed tasks\\Mean $\pm$ SD} & \makecell{Certified\\runs} & \makecell{Shortfall\\(\%)} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel A: HiGHS cold}}\\
+\addlinespace[0.2em]
+20 & $0.5662 \pm 0.0674$ & $13.93 \pm 1.74$ & $30/30$ & 0.0 \\
+30 & $0.4311 \pm 0.0530$ & $16.23 \pm 1.72$ & $30/30$ & 0.0 \\
+40 & $0.3531 \pm 0.0402$ & $18.00 \pm 1.82$ & $30/30$ & 0.0 \\
+50 & $0.2984 \pm 0.0396$ & $19.17 \pm 2.05$ & $30/30$ & 0.0 \\
+60 & $0.2610 \pm 0.0324$ & $20.07 \pm 2.41$ & $30/30$ & 0.0 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel B: Greedy Benefit}}\\
+\addlinespace[0.2em]
+20 & $0.4843 \pm 0.0651$ & $13.63 \pm 1.38$ & -- & 14.4 \\
+30 & $0.3557 \pm 0.0507$ & $15.67 \pm 1.52$ & -- & 17.4 \\
+40 & $0.2847 \pm 0.0427$ & $16.83 \pm 1.88$ & -- & 19.5 \\
+50 & $0.2367 \pm 0.0383$ & $17.33 \pm 2.14$ & -- & 20.7 \\
+60 & $0.2012 \pm 0.0278$ & $17.90 \pm 2.11$ & -- & 22.9 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel C: Greedy Density}}\\
+\addlinespace[0.2em]
+20 & $0.4923 \pm 0.0618$ & $13.97 \pm 1.38$ & -- & 13.0 \\
+30 & $0.3672 \pm 0.0499$ & $16.17 \pm 1.51$ & -- & 14.7 \\
+40 & $0.2932 \pm 0.0472$ & $17.50 \pm 1.94$ & -- & 17.2 \\
+50 & $0.2456 \pm 0.0419$ & $19.10 \pm 2.29$ & -- & 17.9 \\
+60 & $0.2151 \pm 0.0353$ & $19.97 \pm 2.14$ & -- & 17.8 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel D: HiGHS + Benefit start}}\\
+\addlinespace[0.2em]
+20 & $0.5662 \pm 0.0674$ & $13.93 \pm 1.74$ & $30/30$ & 0.0 \\
+30 & $0.4311 \pm 0.0530$ & $16.23 \pm 1.72$ & $30/30$ & 0.0 \\
+40 & $0.3531 \pm 0.0402$ & $18.00 \pm 1.82$ & $30/30$ & 0.0 \\
+50 & $0.2984 \pm 0.0396$ & $19.17 \pm 2.05$ & $30/30$ & 0.0 \\
+60 & $0.2610 \pm 0.0324$ & $20.07 \pm 2.41$ & $30/30$ & 0.0 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel E: HiGHS + Density start}}\\
+\addlinespace[0.2em]
+20 & $0.5662 \pm 0.0674$ & $13.93 \pm 1.74$ & $30/30$ & 0.0 \\
+30 & $0.4311 \pm 0.0530$ & $16.23 \pm 1.72$ & $30/30$ & 0.0 \\
+40 & $0.3531 \pm 0.0402$ & $18.00 \pm 1.82$ & $30/30$ & 0.0 \\
+50 & $0.2984 \pm 0.0396$ & $19.17 \pm 2.05$ & $30/30$ & 0.0 \\
+60 & $0.2610 \pm 0.0324$ & $20.07 \pm 2.41$ & $30/30$ & 0.0 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\columnwidth}
+\footnotesize
+Means and sample SD summarize the same instances for all five variants. All MILP variants receive 600 s. Shortfalls are computed per instance against a certified optimum of the same model and objective, then averaged; unknown optima are excluded. Every generated instance has a certified reference. Certification denotes HiGHS optimal status at relative MIP tolerance 1e-06; it is not applicable to the greedy policies.
+\end{minipage}
+\end{table}

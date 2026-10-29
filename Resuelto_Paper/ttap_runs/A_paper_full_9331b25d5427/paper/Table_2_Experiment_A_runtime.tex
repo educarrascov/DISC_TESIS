@@ -1,0 +1,57 @@
+\begin{table}[!htbp]
+\centering
+\caption{Experiment A: computational performance and generated state-arc MILP size.}
+\label{tab:expA-runtime}
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Tasks & \makecell{Runtime\\Mean $\pm$ SD} & \makecell{Maximum\\runtime} & \makecell{Variables\\mean} & \makecell{Constraints\\mean} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel A: HiGHS cold (seconds)}}\\
+\addlinespace[0.2em]
+20 & $3.65 \pm 4.47$ & $26.13$ & 14{,}939 & 6{,}012 \\
+30 & $6.56 \pm 5.85$ & $34.25$ & 32{,}661 & 11{,}697 \\
+40 & $15.39 \pm 11.97$ & $55.15$ & 60{,}015 & 18{,}937 \\
+50 & $29.67 \pm 24.37$ & $83.38$ & 92{,}362 & 25{,}682 \\
+60 & $69.54 \pm 80.82$ & $382.53$ & 144{,}561 & 34{,}880 \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel B: Greedy Benefit (milliseconds)}}\\
+\addlinespace[0.2em]
+20 & $1.327 \pm 1.525$ & $9.367$ & -- & -- \\
+30 & $1.316 \pm 0.110$ & $1.735$ & -- & -- \\
+40 & $1.623 \pm 0.146$ & $2.044$ & -- & -- \\
+50 & $1.890 \pm 0.159$ & $2.386$ & -- & -- \\
+60 & $2.160 \pm 0.143$ & $2.428$ & -- & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel C: Greedy Density (milliseconds)}}\\
+\addlinespace[0.2em]
+20 & $0.896 \pm 0.060$ & $1.049$ & -- & -- \\
+30 & $1.147 \pm 0.064$ & $1.288$ & -- & -- \\
+40 & $1.449 \pm 0.127$ & $1.802$ & -- & -- \\
+50 & $1.762 \pm 0.183$ & $2.280$ & -- & -- \\
+60 & $2.123 \pm 0.184$ & $2.550$ & -- & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel D: HiGHS + Benefit start (seconds)}}\\
+\addlinespace[0.2em]
+20 & $3.47 \pm 3.89$ & $22.76$ & -- & -- \\
+30 & $6.68 \pm 5.79$ & $34.29$ & -- & -- \\
+40 & $15.27 \pm 11.54$ & $51.29$ & -- & -- \\
+50 & $29.90 \pm 24.62$ & $83.49$ & -- & -- \\
+60 & $69.75 \pm 81.12$ & $385.03$ & -- & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel E: HiGHS + Density start (seconds)}}\\
+\addlinespace[0.2em]
+20 & $3.63 \pm 4.49$ & $26.24$ & -- & -- \\
+30 & $6.68 \pm 5.78$ & $34.29$ & -- & -- \\
+40 & $14.91 \pm 11.12$ & $47.81$ & -- & -- \\
+50 & $29.53 \pm 24.11$ & $83.80$ & -- & -- \\
+60 & $68.85 \pm 81.22$ & $383.61$ & -- & -- \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\columnwidth}
+\footnotesize
+End-to-end time includes network and matrix generation, native conversion, model loading and solving. Warm variants additionally include greedy construction, mapping, validation and submission. Preparation is charged to each treatment although shared within the batch. Greedy runtimes are in milliseconds. The common MILP size is reported once. The solver allowance excludes preparation and is not a guaranteed end-to-end deadline.
+\end{minipage}
+\end{table}

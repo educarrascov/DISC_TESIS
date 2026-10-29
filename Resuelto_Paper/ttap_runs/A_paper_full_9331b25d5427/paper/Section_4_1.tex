@@ -1,0 +1,45 @@
+\subsection{Experiment A: Controlled Repeated-Instance Scaling}
+\label{subsec:experiment-a}
+Experiment A uses four helicopters and four demand areas, with 20, 30, 40,
+50 and 60 tasks and 30 generated instances per size. Each instance is solved
+by Greedy Benefit and Greedy Density, and by HiGHS without a start, with a
+Benefit start, and with a Density start. The three MILP variants share the
+same matrix and solver settings. Each receives independent solve allowances
+of 1, 5, 15, 60 and 600 s. The 600-s runs provide the main comparison below;
+the shorter budgets are examined in Section~4.3.
+The multidimensional benefit defined in Section~3.3 is
+used throughout.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{A1_solution_quality_coverage_aware.pdf}
+\caption{Normalized available benefit in Experiment A at the 600-s MILP
+allowance. Lines denote means over the same 30 instances at each task count;
+shaded regions denote one sample standard deviation. An externally available
+idle plan is scored as zero when cold returns no incumbent. The three MILP curves coincide and are drawn once because all three variants certified every instance and their paired benefits agree within numerical tolerance. }
+\label{fig:expA-quality}
+\end{figure}
+
+At 600 s, cold HiGHS certified 150/150 instances; the Benefit and Density starts certified 150/150 and 150/150, respectively. For Greedy Benefit, mean paired shortfalls ranged from 14.4\% to 22.9\%. For Greedy Density, mean paired shortfalls ranged from 13.0\% to 17.9\%. Shortfall calculations use the 150/150 instances with a certified reference from this objective and model; unknown optima are excluded.
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{A8_computational_effort.pdf}
+\caption{Experiment A computational effort for the three initialization
+strategies. Panel (a) shows all solver times, with medians and interquartile
+ranges. Panel (b) relates solver time to generated state-transition arcs.
+Marker shape identifies the initialization strategy; filled and open markers
+denote certified and uncertified runs. The dashed line is the 600-s solver
+allowance. Table~\ref{tab:expA-runtime} reports end-to-end time, including
+preparation.}
+\label{fig:expA-effort}
+\end{figure*}
+
+On pairs where both variants certified, median warm-minus-cold end-to-end changes were HiGHS + Benefit start: +0.03 s over 150 matched certified pairs; HiGHS + Density start: +0.02 s over 150 matched certified pairs. Positive changes mean that the warm variant took longer. 
+Warm-start availability by itself does not establish a search improvement:
+the constructive plan is already available before optimization. The budget
+analysis therefore also compares each warm result with cold retaining the
+same greedy plan as an external fallback.
+
+\input{Table_1_Experiment_A_quality.tex}
+\input{Table_2_Experiment_A_runtime.tex}

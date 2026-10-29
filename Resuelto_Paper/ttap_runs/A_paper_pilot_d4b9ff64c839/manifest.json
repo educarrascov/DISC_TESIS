@@ -1,0 +1,61 @@
+{
+  "protocol": "TTAP-greedy-MIP-starts-v2",
+  "config": {
+    "experiment": "A",
+    "tasks": [
+      20
+    ],
+    "seeds": [
+      1
+    ],
+    "budgets": [
+      1.0,
+      5.0,
+      15.0,
+      60.0,
+      600.0
+    ],
+    "reference_budgets": [],
+    "objective": {
+      "schema": "ttap-value-v2",
+      "mode": "multidimensional",
+      "weights": {
+        "medical": 2.0,
+        "personnel": 1.5,
+        "cargo": 1.0
+      },
+      "references": {
+        "medical": 3.0,
+        "personnel": 3.0,
+        "cargo": 500.0
+      },
+      "semantics": "distinct-medical-nonmedical-cargo-outputs"
+    },
+    "threads": 1,
+    "solver_seed": 0,
+    "mip_rel_gap": 1e-06,
+    "trace": true,
+    "paper_protocol": "TTAP-A-paper-five-budgets-v1",
+    "paper_runner_sha256": "cccdb79f0db87b3ab78398a5663dbd256e1b3e7a69cf63b3e4d91614fda05b9c"
+  },
+  "config_sha256": "d4b9ff64c839247befc1e9162db7fa1e5a2ea707d4f79dcdd35a0ee6c1770ed4",
+  "base_commit": "07dd90042822e2cab84209fe81c9f31ecfe230a8",
+  "source_files_sha256": {
+    "frozen_generator_A.py": "d1eada7a7557203598f165be50b60faa4e9ef5e572bd64327d430848559841a6",
+    "frozen_generator_B.py": "c33fbb583bceb3582f968f219abc8f5d1b4c5aaf17fa5ac8801cf66c32570297",
+    "frozen_ttap_core.py": "d2d022eaf39cf91ab0d68eba3d95c131a2f90b6408d8e32472e29dc331b114a5",
+    "ttap_warm_start.py": "96a9dc50863b7bb41ef34359cf4cf6cd143880cfd14a9970044396620d0405f6",
+    "objective_profiles.py": "a655b2368b94b96d366fb3919e4300e0d8715efb5c2c88b2b00bbb8564b0eafe",
+    "study_runner.py": "e02a59f2819730de6e728edbf13e02a630839ee6113e57f46060989ae6bf15bd"
+  },
+  "python": "3.11.3",
+  "highs": "1.11.0",
+  "numpy": "1.26.4",
+  "scipy": "1.10.1",
+  "pandas": "3.0.3",
+  "matplotlib": "3.7.1",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "processor": "arm",
+  "machine": "arm64",
+  "cohort": "pilot"
+}
