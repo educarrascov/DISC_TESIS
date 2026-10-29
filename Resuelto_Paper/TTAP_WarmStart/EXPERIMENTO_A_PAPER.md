@@ -66,8 +66,22 @@ incluye construcción, conversión, carga y búsqueda, más los costos del start
 `A3` y `A9` a `A12` conservan el diseño por tamaño de tareas y sirven para la
 sección 4.3: certificación, factibilidad devuelta, incumbent, distancia al óptimo
 y aporte de inyectar el greedy frente a cold que conserva ese mismo respaldo.
-Se exportan PDF vectorial, PNG de 600 dpi y una vista previa pequeña. El PDF
-evita necesitar rasterizaciones de 2000 dpi que consumen mucha memoria.
+Se exportan PDF y SVG vectoriales, PNG de 1200 dpi y una vista previa de 240 dpi.
+El notebook muestra SVG. El PDF es el archivo que se usa en Overleaf. Líneas
+y marcadores más finos reducen el peso visual sin interpolar ni cambiar datos.
+El notebook `20261029_Reexportar_Experimento_A_Paper.ipynb` vuelve a generar
+las figuras y tablas de una corrida completa sin ejecutar ninguna optimización.
+Si falta la carpeta local, puede recuperar únicamente `metrics.csv` y el
+manifiesto del resultado publicado, con verificación de integridad.
+
+Las figuras A10/A11 muestran medias condicionadas a disponer de incumbent
+(y, para brechas, de referencia certificada). Los marcadores abiertos y las
+anotaciones indican muestras incompletas. A13 reúne factibilidad, beneficio y
+brecha con los denominadores visibles. No interpretar un cero de brecha basado
+en pocos incumbents como calidad en toda la cohorte. A12 expresa la ganancia
+de inyección en puntos porcentuales del beneficio normalizado y conserva
+valores negativos. El CSV `injection_win_tie_loss_counts.csv` añade victorias,
+empates y pérdidas con tolerancia absoluta de 1e-6.
 
 En Overleaf se requieren `booktabs`, `makecell` y `graphicx`. Subir las dos
 figuras principales y los .tex juntos, o adaptar `graphicspath`. Revisar los
@@ -86,7 +100,8 @@ Actualizar la sección 3.3 y la fórmula de ambos greedy junto con la sección 4
 La introducción de la sección 4 debe hablar de dos políticas constructivas y
 tres inicializaciones del mismo MILP. Recalcular B y Talcahuano con el mismo
 objetivo antes de presentar todos los casos juntos. Sus notebooks y el protocolo
-anterior se conservan; este perfil nuevo sólo corresponde al Experimento A.
+anterior se conservan. El perfil B de seis presupuestos se documenta por
+separado en `EXPERIMENTO_B_PAPER.md`.
 
 El programa guarda las nuevas corridas localmente y no publica datos,
 resultados, gráficos ni manuscritos en GitHub.

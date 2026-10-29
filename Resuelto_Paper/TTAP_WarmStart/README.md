@@ -1,3 +1,11 @@
+> Notebooks actuales del paper: A usa cinco presupuestos y B seis, incluidos
+> 600/1800 s para los tres tratamientos. Ambos exportan PDF/SVG y PNG de
+> 1200 dpi. Hay un notebook de reexportación de A sin optimización.
+> Ver [EJECUTAR_NOTEBOOKS.md](EJECUTAR_NOTEBOOKS.md),
+> [EXPERIMENTO_A_PAPER.md](EXPERIMENTO_A_PAPER.md) y
+> [EXPERIMENTO_B_PAPER.md](EXPERIMENTO_B_PAPER.md).
+> Las instrucciones de cuatro presupuestos que siguen describen el CLI anterior.
+
 # TTAP: greedy MIP starts and budget-quality reporting
 
 The current Experiment A notebook is the five-budget paper workflow (1/5/15/60/600 s
