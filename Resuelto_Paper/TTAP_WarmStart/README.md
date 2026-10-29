@@ -1,5 +1,10 @@
 # TTAP: greedy MIP starts and budget-quality reporting
 
+The current Experiment A notebook is the five-budget paper workflow (1/5/15/60/600 s
+for all three HiGHS treatments), with LaTeX tables and the A1/A8 paper figures.
+See [EXPERIMENTO_A_PAPER.md](EXPERIMENTO_A_PAPER.md). Its outputs are separate
+from the legacy runs described below. Experiment B keeps its existing protocol.
+
 For the executable A/B notebooks dated 2026-10-28, use
 [EJECUTAR_NOTEBOOKS.md](EJECUTAR_NOTEBOOKS.md) and `requirements_execution.txt`.
 They support explicit primary/multidimensional objectives and new references.

@@ -1,5 +1,17 @@
 # Ejecutar los notebooks A/B
 
+## Versión actual del Experimento A para el paper
+
+`20261028_Experimento_A_WarmStart.ipynb` usa el perfil nuevo de cinco presupuestos:
+1, 5, 15, 60 y 600 s para cold y ambos starts. Su modo inicial es `full`.
+Genera las Tablas 1/2, las figuras A1/A8 y los gráficos de presupuestos.
+No tiene una fase de referencia adicional. Las instrucciones completas están
+en [EXPERIMENTO_A_PAPER.md](EXPERIMENTO_A_PAPER.md).
+
+El texto siguiente describe el protocolo anterior y el Experimento B, que
+conserva sus cuatro presupuestos cortos y referencias largas. Para A debe
+usarse el perfil nuevo; sus carpetas comienzan con `A_paper_`.
+
 Los notebooks `20261028_Experimento_A_WarmStart.ipynb` y
 `20261028_Experimento_B_WarmStart.ipynb` se encuentran en `Resuelto_Paper`.
 Ejecutan nuevas instancias del MILP con tres tratamientos: sin solución
