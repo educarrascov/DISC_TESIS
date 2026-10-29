@@ -171,6 +171,17 @@ class ExecutionStudyTests(unittest.TestCase):
         self.assertAlmostEqual(row["Available shortfall pct"], 100 / 7)
         self.assertAlmostEqual(row["Solver shortfall pct"], 300 / 7)
 
+    def test_legacy_reference_count_is_limited_to_current_cohort(self):
+        spec = ObjectiveSpec("primary")
+        data = self.reporting_fixture(spec)
+        known = {"Configuration": "A", "Scenario": "A4x4_T20_S1", "Tasks": 20,
+                 "Seed": 1, "Objective SHA256": spec.fingerprint,
+                 "Certified optimum": .70}
+        outside = {**known, "Configuration": "B", "Scenario": "B6x7_T20_S1"}
+        _, _, _, _, references = prepare_study(data, spec, pd.DataFrame([known, outside]))
+        self.assertEqual(len(references), 1)
+        self.assertEqual(references.iloc[0]["Scenario"], "A4x4_T20_S1")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

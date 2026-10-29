@@ -1,0 +1,37 @@
+{
+  "settings": {
+    "experiments": [
+      "A"
+    ],
+    "tasks": [
+      20
+    ],
+    "seeds": [
+      1
+    ],
+    "budgets": [
+      1.0,
+      5.0,
+      15.0,
+      60.0
+    ],
+    "threads": 1,
+    "solver_seed": 0,
+    "mip_rel_gap": 1e-06,
+    "verbose": false,
+    "replay_logs": null,
+    "replay_metrics": null,
+    "replay_method": null,
+    "allow_oracle_replay": false
+  },
+  "source_commit": "07dd90042822e2cab84209fe81c9f31ecfe230a8",
+  "objective_version": "primary-output_matched-v3_fixed-references-3-3-500",
+  "highs": "1.15.1",
+  "python": "3.11.3",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "numpy": "2.4.6",
+  "pandas": "3.0.5",
+  "scipy": "1.17.1",
+  "frozen_source_sha256": "b6569ca70a218c4268c17b5341ee16263db56e49afd97604711d081f20c871b1",
+  "runner_sha256": "6849d3c27b0a503b5f41fb5611f686bc431a462e6f40c45c658a739a2941a7f4"
+}

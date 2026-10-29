@@ -1,4 +1,21 @@
+> Estilo de publicación: ambos notebooks comienzan en full y exportan PNG
+> a 2000 dpi. La carpeta de corrida es `ttap_runs_paper_2000dpi`.
+> Ver [GRAFICOS_PAPER.md](GRAFICOS_PAPER.md) para ejecución y formato de figuras.
+
+> Notebooks actuales del paper: A usa cinco presupuestos y B seis, incluidos
+> 600/1800 s para los tres tratamientos. Ambos exportan PDF/SVG y PNG de
+> 2000 dpi. Hay un notebook de reexportación de A sin optimización.
+> Ver [EJECUTAR_NOTEBOOKS.md](EJECUTAR_NOTEBOOKS.md),
+> [EXPERIMENTO_A_PAPER.md](EXPERIMENTO_A_PAPER.md) y
+> [EXPERIMENTO_B_PAPER.md](EXPERIMENTO_B_PAPER.md).
+> Las instrucciones de cuatro presupuestos que siguen describen el CLI anterior.
+
 # TTAP: greedy MIP starts and budget-quality reporting
+
+The current Experiment A notebook is the five-budget paper workflow (1/5/15/60/600 s
+for all three HiGHS treatments), with LaTeX tables and the A1/A8 paper figures.
+See [EXPERIMENTO_A_PAPER.md](EXPERIMENTO_A_PAPER.md). Its outputs are separate
+from the legacy runs described below. Experiment B keeps its existing protocol.
 
 For the executable A/B notebooks dated 2026-10-28, use
 [EJECUTAR_NOTEBOOKS.md](EJECUTAR_NOTEBOOKS.md) and `requirements_execution.txt`.

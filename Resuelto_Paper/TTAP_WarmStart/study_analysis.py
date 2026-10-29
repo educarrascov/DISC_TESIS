@@ -79,6 +79,9 @@ def prepare_study(raw, spec, legacy_references=None, require_full=False):
             raise ValueError("Historical reference fingerprint mismatch")
         references = pd.concat([references, legacy[KEYS + ["Certified optimum"]]], ignore_index=True)
         references = references.groupby(KEYS, as_index=False)["Certified optimum"].max()
+    # Return/count only reference instances belonging to this run's cohort.
+    references = references.merge(solver[KEYS].drop_duplicates(), on=KEYS,
+                                  how="inner", validate="one_to_one")
     solver = solver.merge(references, on=KEYS, how="left", validate="many_to_one")
     if (solver["Available value"] > solver["Certified optimum"] + 1e-6).any():
         raise ValueError("Available value exceeds certified reference: inspect objective/model identity")
