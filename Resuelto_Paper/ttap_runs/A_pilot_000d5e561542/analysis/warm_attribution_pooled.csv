@@ -1,0 +1,9 @@
+Configuration,Start Method,Time Limit sec,n,mean_gain_over_greedy,median_gain_over_greedy,mean_injection_gain,median_injection_gain,improved_greedy,beat_cold_plus_greedy
+A,GBStart,1.0,1,0.0,0.0,0.0,0.0,0,0
+A,GBStart,5.0,1,0.0,0.0,0.0,0.0,0,0
+A,GBStart,15.0,1,0.12284742475318011,0.12284742475318011,0.0,0.0,1,0
+A,GBStart,60.0,1,0.12284742475318011,0.12284742475318011,0.0,0.0,1,0
+A,GDStart,1.0,1,0.0,0.0,0.0,0.0,0,0
+A,GDStart,5.0,1,0.0,0.0,0.0,0.0,0,0
+A,GDStart,15.0,1,0.1195083186216983,0.1195083186216983,0.0,0.0,1,0
+A,GDStart,60.0,1,0.1195083186216983,0.1195083186216983,0.0,0.0,1,0
