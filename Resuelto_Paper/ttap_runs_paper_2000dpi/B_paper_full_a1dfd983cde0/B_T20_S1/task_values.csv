@@ -1,0 +1,21 @@
+Configuration,Scenario,Task ID,Node,Medical,Personnel,Cargo kg,Task class,Potential value,Medical value component,Personnel value component,Cargo value component,Objective SHA256
+B,B6x7_stress_T20_S1,1,E,3,3,400,medical,2.0,2.0,1.5,0.8,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,2,F,0,2,150,personnel,1.0,0.0,1.0,0.3,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,3,D,2,2,300,medical,1.3333333333333333,1.3333333333333333,1.0,0.6,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,4,C,1,2,50,medical,0.6666666666666666,0.6666666666666666,1.0,0.1,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,5,G,0,3,500,personnel,1.5,0.0,1.5,1.0,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,6,F,0,3,300,personnel,1.5,0.0,1.5,0.6,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,7,F,0,0,150,cargo,0.3,0.0,0.0,0.3,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,8,F,2,1,200,medical,1.3333333333333333,1.3333333333333333,0.5,0.4,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,9,F,3,1,500,medical,2.0,2.0,0.5,1.0,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,10,E,0,1,200,personnel,0.5,0.0,0.5,0.4,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,11,F,0,0,350,cargo,0.7,0.0,0.0,0.7,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,12,A,2,1,100,medical,1.3333333333333333,1.3333333333333333,0.5,0.2,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,13,F,0,2,100,personnel,1.0,0.0,1.0,0.2,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,14,B,0,0,300,cargo,0.6,0.0,0.0,0.6,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,15,G,0,0,100,cargo,0.2,0.0,0.0,0.2,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,16,D,0,0,100,cargo,0.2,0.0,0.0,0.2,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,17,F,1,2,200,medical,0.6666666666666666,0.6666666666666666,1.0,0.4,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,18,E,2,3,400,medical,1.3333333333333333,1.3333333333333333,1.5,0.8,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,19,F,0,2,50,personnel,1.0,0.0,1.0,0.1,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf
+B,B6x7_stress_T20_S1,20,B,3,3,350,medical,2.0,2.0,1.5,0.7,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf

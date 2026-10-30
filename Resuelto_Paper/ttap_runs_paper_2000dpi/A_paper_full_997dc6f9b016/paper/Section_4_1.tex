@@ -1,0 +1,44 @@
+\subsection{Experiment A: Controlled Repeated-Instance Scaling}
+
+\label{subsec:experiment-a}
+
+Experiment A uses four helicopters with equal capacities but different speeds and visual capabilities, serving four demand areas, with 20, 30, 40, 50 and 60 tasks and 30 generated instances per size. Greedy Benefit and Greedy Density are compared with three initializations of the same MILP: cold HiGHS, a Benefit start and a Density start. All methods use the primary-output benefit in Section~3.3. Each MILP treatment receives independent solve allowances of 1, 5, 15, 60 and 600 s. The 600-s runs provide the main comparison; Section~4.3 examines shorter budgets. Allowances are HiGHS parameters, not hard wall-clock deadlines.
+
+
+
+At 600 s, cold HiGHS and the Benefit and Density starts certified 150/150, 150/150 and 150/150 instances, respectively. Greedy Benefit had mean paired shortfalls of 12.6--19.1\% across task counts. Greedy Density had mean paired shortfalls of 12.8--16.1\% across task counts.
+
+Every instance has a certified reference. The decline in normalized benefit as task count grows describes the share of mission value served by a fixed fleet; it does not imply a decline in absolute aid delivered. The objective rewards timely weighted output, so completing more tasks alone need not yield greater benefit.
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{A1_solution_quality_coverage_aware.pdf}
+\caption{Experiment A benefit at the 600-s MILP allowance. 
+Lines show means over the same 30 instances at each task count; bands show
+one sample standard deviation. All three MILP variants certified every instance and their paired objective values agree within numerical tolerance, so they are drawn once.}
+\label{fig:expA-quality}
+\end{figure}
+
+
+Among matched runs in which both methods certified, median end-to-end time differences relative to cold were HiGHS + Benefit start: +0.03 s (150 pairs); HiGHS + Density start: +0.03 s (150 pairs).
+
+With a 1-s allowance, cold returned incumbents in 2/150 instances, compared with 150/150 and 150/150 for the two starts. This availability largely reflects the supplied constructive plans. Across the shorter allowances, injection improved on cold retaining the same greedy fallback in only 13/1200 paired treatment--budget comparisons (absolute benefit tolerance $10^{-6}$). These repeated comparisons do not represent independent instances. The median injection gain was zero at every budget for each start in this run; the experiment gives no basis for claiming a general search speedup.
+
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{A8_computational_effort.pdf}
+\caption{Experiment A computational effort. Panel (a) shows solver
+times with medians and interquartile ranges; panel (b) relates solver time to
+generated state-transition arcs. Marker shape identifies the initialization.
+Filled markers denote certified runs; open markers, when present, denote
+uncertified runs. The dashed line is the 600-s solver allowance.
+Table~\ref{tab:expA-runtime} includes preparation time.}
+\label{fig:expA-effort}
+\end{figure*}
+
+
+\input{Table_1_Experiment_A_quality.tex}
+
+\input{Table_2_Experiment_A_runtime.tex}

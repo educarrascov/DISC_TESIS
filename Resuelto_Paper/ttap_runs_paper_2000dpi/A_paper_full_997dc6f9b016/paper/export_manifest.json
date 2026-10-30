@@ -1,0 +1,66 @@
+{
+  "full_cohort": true,
+  "experiment": "A",
+  "benchmark_budget_sec": 600.0,
+  "solver_budgets_sec": [
+    1.0,
+    5.0,
+    15.0,
+    60.0,
+    600.0
+  ],
+  "instances": 150,
+  "solver_runs": 2250,
+  "heuristic_runs": 300,
+  "known_certified_optima": 150,
+  "coincident_certified_MILP_curves": true,
+  "objective": {
+    "schema": "ttap-value-v2",
+    "mode": "primary",
+    "weights": {
+      "medical": 2.0,
+      "personnel": 1.5,
+      "cargo": 1.0
+    },
+    "references": {
+      "medical": 3.0,
+      "personnel": 3.0,
+      "cargo": 500.0
+    },
+    "semantics": "one-primary-output-with-auxiliary-resource-requirements"
+  },
+  "png_dpi": 2000,
+  "graphics_version": "20261029.3-paper-2000dpi",
+  "vector_formats": [
+    "pdf",
+    "svg"
+  ],
+  "figure_sizes_inches": {
+    "quality": [
+      3.5,
+      2.35
+    ],
+    "effort": [
+      7.2,
+      3.15
+    ],
+    "budget_by_task": [
+      7.2,
+      2.65
+    ],
+    "attribution": [
+      7.2,
+      2.8
+    ],
+    "budget_overview": [
+      7.2,
+      2.8
+    ]
+  },
+  "raw_metrics_sha256": "db3b46d3561194a585545dd03d821fd31b7263f963d1914249c6f52d8e6ae05d",
+  "run_manifest_sha256": "c3556874bcf1c37f79c00a89a2a62757cec7b9b50464c49d65af38225e1576eb",
+  "data_interpolation_or_smoothing": false,
+  "quality_estimand": "mean available value on every generated instance; idle=0 if no returned plan",
+  "budget_quality_estimand": "solver-returned incumbents; missing incumbents excluded with counts",
+  "gap_definition": "per-instance shortfall to certified optimum, averaged on known references only"
+}
