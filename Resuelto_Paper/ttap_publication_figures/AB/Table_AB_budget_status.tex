@@ -1,0 +1,52 @@
+\begin{table*}[!htbp]
+\centering
+\caption{Configured-limit results for Experiments A and B.}
+\label{tab:AB-budget-status}
+\scriptsize
+\setlength{\tabcolsep}{3.1pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+Exp. & \makecell{Limit\\(s)} & Start & \makecell{Certified\\$n$} & \makecell{Feasible\\uncertified $n$} & \makecell{No solver\\incumbent $n$} & \makecell{Mean incumbent\\($n$)} & \makecell{Mean available\\benefit} & \makecell{Mean shortfall\\(\%); $n$} \\
+\midrule
+A & 1 & Cold & 2 & 0 & 148 & 0.5529 (2) & 0.0074 & 0.00; 2 \\
+A & 1 & GB & 2 & 148 & 0 & 0.3268 (150) & 0.3268 & 16.35; 150 \\
+A & 1 & GD & 2 & 148 & 0 & 0.3332 (150) & 0.3332 & 14.40; 150 \\
+A & 5 & Cold & 49 & 10 & 91 & 0.4296 (59) & 0.1690 & 11.90; 59 \\
+A & 5 & GB & 47 & 103 & 0 & 0.3487 (150) & 0.3487 & 11.66; 150 \\
+A & 5 & GD & 44 & 106 & 0 & 0.3533 (150) & 0.3533 & 10.17; 150 \\
+A & 15 & Cold & 91 & 41 & 18 & 0.3292 (132) & 0.2897 & 22.51; 132 \\
+A & 15 & GB & 94 & 56 & 0 & 0.3675 (150) & 0.3675 & 6.32; 150 \\
+A & 15 & GD & 91 & 59 & 0 & 0.3702 (150) & 0.3702 & 5.44; 150 \\
+A & 60 & Cold & 132 & 17 & 1 & 0.3657 (149) & 0.3633 & 7.51; 149 \\
+A & 60 & GB & 133 & 17 & 0 & 0.3820 (150) & 0.3820 & 1.74; 150 \\
+A & 60 & GD & 133 & 17 & 0 & 0.3826 (150) & 0.3826 & 1.51; 150 \\
+A & 600 & Cold & 150 & 0 & 0 & 0.3870 (150) & 0.3870 & 0.00; 150 \\
+A & 600 & GB & 150 & 0 & 0 & 0.3870 (150) & 0.3870 & 0.00; 150 \\
+A & 600 & GD & 150 & 0 & 0 & 0.3870 (150) & 0.3870 & 0.00; 150 \\
+\midrule
+B & 1 & Cold & 0 & 0 & 150 & -- (0) & 0.0000 & --; 0 \\
+B & 1 & GB & 0 & 150 & 0 & 0.4669 (150) & 0.4669 & 14.27; 116 \\
+B & 1 & GD & 0 & 150 & 0 & 0.4622 (150) & 0.4622 & 15.24; 116 \\
+B & 5 & Cold & 3 & 2 & 145 & 0.6554 (5) & 0.0218 & 9.67; 5 \\
+B & 5 & GB & 3 & 147 & 0 & 0.4691 (150) & 0.4691 & 13.87; 116 \\
+B & 5 & GD & 3 & 147 & 0 & 0.4641 (150) & 0.4641 & 14.90; 116 \\
+B & 15 & Cold & 18 & 13 & 119 & 0.5818 (31) & 0.1202 & 19.60; 31 \\
+B & 15 & GB & 17 & 133 & 0 & 0.4778 (150) & 0.4778 & 12.28; 116 \\
+B & 15 & GD & 18 & 132 & 0 & 0.4749 (150) & 0.4749 & 12.94; 116 \\
+B & 60 & Cold & 39 & 18 & 93 & 0.5823 (57) & 0.2213 & 14.26; 57 \\
+B & 60 & GB & 39 & 111 & 0 & 0.4938 (150) & 0.4938 & 9.10; 116 \\
+B & 60 & GD & 40 & 110 & 0 & 0.4908 (150) & 0.4908 & 9.78; 116 \\
+B & 600 & Cold & 90 & 30 & 30 & 0.4841 (120) & 0.3873 & 16.08; 114 \\
+B & 600 & GB & 89 & 61 & 0 & 0.5175 (150) & 0.5175 & 3.40; 116 \\
+B & 600 & GD & 89 & 61 & 0 & 0.5168 (150) & 0.5168 & 3.48; 116 \\
+B & 1800 & Cold & 116 & 22 & 12 & 0.5103 (138) & 0.4695 & 0.00; 116 \\
+B & 1800 & GB & 116 & 34 & 0 & 0.5305 (150) & 0.5305 & 0.00; 116 \\
+B & 1800 & GD & 116 & 34 & 0 & 0.5303 (150) & 0.5303 & 0.00; 116 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\textwidth}
+\footnotesize
+Each experiment has 150 instances. Certified, feasible uncertified and no solver incumbent are disjoint categories summing to 150. The mean incumbent excludes missing solver solutions; its sample count is shown. Available benefit averages over all 150 instances and assigns idle value zero separately when no solver plan is returned. Shortfalls are computed per instance against a certified optimum of the same model, then averaged only over returned incumbents with a known optimum. There are 150 known references in A and 116 in B. GB and GD denote Benefit and Density starts. Limits are configured HiGHS allowances; measured times may exceed them. These are independent runs, not observations at exact wall-clock deadlines.
+\end{minipage}
+\end{table*}

@@ -1,0 +1,57 @@
+\begin{table}[!htbp]
+\centering
+\caption{Experiment B: computational performance and generated state-arc MILP size.}
+\label{tab:expB-runtime}
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Tasks & \makecell{Runtime\\Mean $\pm$ SD} & \makecell{Maximum\\runtime} & \makecell{Variables\\mean} & \makecell{Constraints\\mean} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel A: HiGHS cold (seconds)}}\\
+\addlinespace[0.2em]
+20 & $31.85 \pm 55.52$ & $297.51$ & $84{,}274$ & $30{,}945$ \\
+30 & $209.22 \pm 336.73$ & $1512.75$ & $211{,}166$ & $66{,}316$ \\
+40 & $659.14 \pm 748.26$ & $3761.75$ & $413{,}162$ & $108{,}489$ \\
+50 & $1286.71 \pm 1040.37$ & $5625.95$ & $655{,}107$ & $147{,}902$ \\
+60 & $2064.36 \pm 1677.47$ & $10343.86$ & $1{,}019{,}518$ & $193{,}893$ \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel B: HiGHS + Benefit start (seconds)}}\\
+\addlinespace[0.2em]
+20 & $33.52 \pm 61.65$ & $333.83$ & -- & -- \\
+30 & $209.60 \pm 338.78$ & $1497.82$ & -- & -- \\
+40 & $665.82 \pm 742.93$ & $3747.63$ & -- & -- \\
+50 & $1292.43 \pm 1039.66$ & $5635.91$ & -- & -- \\
+60 & $2067.36 \pm 1674.80$ & $10332.76$ & -- & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel C: HiGHS + Density start (seconds)}}\\
+\addlinespace[0.2em]
+20 & $32.57 \pm 59.66$ & $320.18$ & -- & -- \\
+30 & $210.42 \pm 337.79$ & $1520.61$ & -- & -- \\
+40 & $667.02 \pm 752.74$ & $3750.98$ & -- & -- \\
+50 & $1280.87 \pm 1039.72$ & $5619.31$ & -- & -- \\
+60 & $2067.23 \pm 1674.32$ & $10329.44$ & -- & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel D: Greedy Benefit (milliseconds)}}\\
+\addlinespace[0.2em]
+20 & $1.263 \pm 0.925$ & $6.143$ & -- & -- \\
+30 & $1.433 \pm 0.072$ & $1.615$ & -- & -- \\
+40 & $1.883 \pm 0.108$ & $2.152$ & -- & -- \\
+50 & $2.540 \pm 0.869$ & $5.774$ & -- & -- \\
+60 & $3.757 \pm 1.720$ & $8.736$ & -- & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel E: Greedy Density (milliseconds)}}\\
+\addlinespace[0.2em]
+20 & $0.947 \pm 0.069$ & $1.137$ & -- & -- \\
+30 & $1.287 \pm 0.090$ & $1.608$ & -- & -- \\
+40 & $1.712 \pm 0.135$ & $2.131$ & -- & -- \\
+50 & $2.176 \pm 0.144$ & $2.496$ & -- & -- \\
+60 & $2.857 \pm 1.012$ & $8.137$ & -- & -- \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\columnwidth}
+\footnotesize
+All generated instances are included regardless of certification. End-to-end time includes network generation, matrix construction, native conversion, model loading and solving; warm variants also include greedy construction, mapping, validation and submission. The common MILP size is shown once. A configured solver limit is not a guaranteed elapsed-time deadline.
+\end{minipage}
+\end{table}

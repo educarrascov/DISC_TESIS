@@ -1,0 +1,41 @@
+\begin{table}[!htbp]
+\centering
+\caption{Experiment B: solution quality on matched certified instances.}
+\label{tab:expB-quality}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Tasks & \makecell{Normalized benefit\\Mean $\pm$ SD} & \makecell{Completed tasks\\Mean $\pm$ SD} & \makecell{Certified\\runs} & \makecell{Greedy gap\\benefit (\%)} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel A: HiGHS certified optimum}}\\
+\addlinespace[0.2em]
+20 & $0.7581 \pm 0.0559$ & $18.60 \pm 0.89$ & $30/30$ & -- \\
+30 & $0.6122 \pm 0.0523$ & $23.33 \pm 1.58$ & $30/30$ & -- \\
+40 & $0.5152 \pm 0.0477$ & $26.30 \pm 2.15$ & $27/30$ & -- \\
+50 & $0.4461 \pm 0.0454$ & $28.60 \pm 2.56$ & $20/30$ & -- \\
+60 & $0.3889 \pm 0.0451$ & $30.22 \pm 3.35$ & $9/30$ & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel B: Greedy Benefit}}\\
+\addlinespace[0.2em]
+20 & $0.6681 \pm 0.0549$ & $17.57 \pm 1.33$ & -- & $11.9$ \\
+30 & $0.5257 \pm 0.0500$ & $21.40 \pm 1.52$ & -- & $14.1$ \\
+40 & $0.4389 \pm 0.0415$ & $24.26 \pm 1.79$ & -- & $14.8$ \\
+50 & $0.3734 \pm 0.0320$ & $26.30 \pm 2.32$ & -- & $16.3$ \\
+60 & $0.3207 \pm 0.0346$ & $26.44 \pm 3.09$ & -- & $17.6$ \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Panel C: Greedy Density}}\\
+\addlinespace[0.2em]
+20 & $0.6611 \pm 0.0523$ & $17.73 \pm 1.26$ & -- & $12.8$ \\
+30 & $0.5208 \pm 0.0517$ & $22.33 \pm 1.37$ & -- & $14.9$ \\
+40 & $0.4301 \pm 0.0434$ & $25.48 \pm 1.45$ & -- & $16.5$ \\
+50 & $0.3717 \pm 0.0375$ & $27.05 \pm 2.16$ & -- & $16.7$ \\
+60 & $0.3201 \pm 0.0403$ & $28.67 \pm 2.65$ & -- & $17.7$ \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\columnwidth}
+\footnotesize
+All three panels use the same certified-instance subset at each task count (selection: Cold). The longest configured solver limit is 1800 s. Means and sample SD are conditional when certification is incomplete; they do not describe the unsolved instances. The last column is the relative shortfall between the displayed sample means. Certified counts use all generated instances as denominator. Optimal status uses relative MIP tolerance 1e-06.
+\end{minipage}
+\end{table}

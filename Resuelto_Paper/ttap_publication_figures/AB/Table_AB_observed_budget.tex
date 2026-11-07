@@ -1,0 +1,52 @@
+\begin{table*}[!htbp]
+\centering
+\caption{Observed solution availability at elapsed solve-time checkpoints.}
+\label{tab:AB-observed-budget}
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+Exp. & \makecell{Elapsed\\(s)} & Start & \makecell{Certified\\$n$} & \makecell{Observed feasible\\uncertified $n$} & \makecell{No observed solver\\incumbent $n$} & \makecell{Mean observed\\incumbent ($n$)} & \makecell{Mean available\\benefit} & \makecell{Available shortfall\\(\%); $n$} \\
+\midrule
+A & 1 & Cold & 2 & 0 & 148 & 0.5529 (2) & 0.0074 & 98.67; 150 \\
+A & 1 & GB & 2 & 0 & 148 & 0.5529 (2) & 0.3268 & 16.35; 150 \\
+A & 1 & GD & 2 & 0 & 148 & 0.5529 (2) & 0.3332 & 14.40; 150 \\
+A & 5 & Cold & 47 & 14 & 89 & 0.4096 (61) & 0.1666 & 66.03; 150 \\
+A & 5 & GB & 45 & 40 & 65 & 0.4138 (85) & 0.3482 & 11.81; 150 \\
+A & 5 & GD & 42 & 43 & 65 & 0.4173 (85) & 0.3527 & 10.36; 150 \\
+A & 15 & Cold & 91 & 40 & 19 & 0.3200 (131) & 0.2795 & 35.48; 150 \\
+A & 15 & GB & 93 & 55 & 2 & 0.3688 (148) & 0.3669 & 6.58; 150 \\
+A & 15 & GD & 90 & 58 & 2 & 0.3711 (148) & 0.3693 & 5.78; 150 \\
+A & 60 & Cold & 132 & 17 & 1 & 0.3627 (149) & 0.3603 & 9.03; 150 \\
+A & 60 & GB & 133 & 17 & 0 & 0.3813 (150) & 0.3813 & 1.94; 150 \\
+A & 60 & GD & 132 & 18 & 0 & 0.3818 (150) & 0.3818 & 1.76; 150 \\
+A & 600 & Cold & 150 & 0 & 0 & 0.3870 (150) & 0.3870 & 0.00; 150 \\
+A & 600 & GB & 150 & 0 & 0 & 0.3870 (150) & 0.3870 & 0.00; 150 \\
+A & 600 & GD & 150 & 0 & 0 & 0.3870 (150) & 0.3870 & 0.00; 150 \\
+\midrule
+B & 1 & Cold & 0 & 0 & 150 & -- (0) & 0.0000 & 100.00; 116 \\
+B & 1 & GB & 0 & 0 & 150 & -- (0) & 0.4669 & 14.27; 116 \\
+B & 1 & GD & 0 & 0 & 150 & -- (0) & 0.4622 & 15.24; 116 \\
+B & 5 & Cold & 3 & 2 & 145 & 0.6334 (5) & 0.0211 & 96.24; 116 \\
+B & 5 & GB & 3 & 5 & 142 & 0.6598 (8) & 0.4688 & 13.94; 116 \\
+B & 5 & GD & 3 & 5 & 142 & 0.6590 (8) & 0.4638 & 14.96; 116 \\
+B & 15 & Cold & 18 & 13 & 119 & 0.5711 (31) & 0.1180 & 78.97; 116 \\
+B & 15 & GB & 17 & 34 & 99 & 0.6229 (51) & 0.4778 & 12.28; 116 \\
+B & 15 & GD & 18 & 33 & 99 & 0.6235 (51) & 0.4749 & 12.94; 116 \\
+B & 60 & Cold & 39 & 18 & 93 & 0.5652 (57) & 0.2148 & 59.50; 116 \\
+B & 60 & GB & 39 & 61 & 50 & 0.5605 (100) & 0.4922 & 9.45; 116 \\
+B & 60 & GD & 40 & 60 & 50 & 0.5564 (100) & 0.4888 & 10.22; 116 \\
+B & 600 & Cold & 87 & 34 & 29 & 0.4623 (121) & 0.3730 & 21.38; 116 \\
+B & 600 & GB & 87 & 63 & 0 & 0.5158 (150) & 0.5158 & 3.88; 116 \\
+B & 600 & GD & 87 & 63 & 0 & 0.5140 (150) & 0.5140 & 4.22; 116 \\
+B & 1800 & Cold & 116 & 22 & 12 & 0.5054 (138) & 0.4650 & 0.00; 116 \\
+B & 1800 & GB & 116 & 34 & 0 & 0.5302 (150) & 0.5302 & 0.00; 116 \\
+B & 1800 & GD & 116 & 34 & 0 & 0.5296 (150) & 0.5296 & 0.00; 116 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\textwidth}
+\footnotesize
+All checkpoints use one long search per instance and initialization (600-s source limit in A, 1800 s in B). Only callbacks observed by the checkpoint are used. Certified, observed feasible uncertified and no observed solver incumbent partition the 150 instances; these categories describe observations and do not imply infeasibility when an incumbent has not been observed. A validated greedy start is available separately at time zero in both warm treatments. The available-benefit mean includes all 150 cases and idle value zero if necessary. Shortfalls include available starts or idle plans and use only the 150 known optima in A and 116 in B. Missing solver incumbents are excluded only from their conditional mean. Preparation time is excluded.
+\end{minipage}
+\end{table*}
