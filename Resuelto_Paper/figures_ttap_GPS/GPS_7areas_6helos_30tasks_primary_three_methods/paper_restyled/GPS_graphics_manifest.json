@@ -1,0 +1,107 @@
+{
+  "scenario": "GPS_7areas_6helos_30tasks",
+  "objective_mode": "primary",
+  "methods": [
+    "Greedy Benefit",
+    "Greedy Density",
+    "Exact-HiGHS"
+  ],
+  "helos": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "n_tasks": 30,
+  "benefits": {
+    "Greedy Benefit": 0.5160779921750199,
+    "Greedy Density": 0.5160779921750199,
+    "Exact-HiGHS": 0.5865262506582332
+  },
+  "optimal_certified": {
+    "Greedy Benefit": false,
+    "Greedy Density": false,
+    "Exact-HiGHS": true
+  },
+  "coincident_greedy_cumulative": true,
+  "style": {
+    "png_dpi": 600,
+    "preview_dpi": 160,
+    "formats": [
+      "pdf",
+      "png",
+      "svg"
+    ],
+    "curve_mode": "events",
+    "xlim": null,
+    "benefit_ylim": null,
+    "show_grid_allowance": false,
+    "show_base_labels": true,
+    "task_label_size": 10.5,
+    "base_label_size": 8,
+    "bar_height": 0.34,
+    "comparison_bar_height": 0.52,
+    "figures": {
+      "gantt": [
+        14.0,
+        4.5
+      ],
+      "gantt_comparison": [
+        12.4,
+        10.2
+      ],
+      "cumulative": [
+        10.0,
+        5.0
+      ],
+      "metrics": [
+        12.4,
+        7.1
+      ],
+      "table": [
+        12.4,
+        2.8
+      ]
+    },
+    "colors": {
+      "Greedy Benefit": "#ff7f0e",
+      "Greedy Density": "#2ca02c",
+      "HiGHS": "#1f77b4",
+      "flight": "#9ecae1",
+      "service": "#3182bd",
+      "recovery": "#cccccc",
+      "grid_allowance": "#eeeeee"
+    },
+    "rc": {
+      "figure.dpi": 160,
+      "font.family": "DejaVu Sans",
+      "font.size": 11,
+      "axes.titlesize": 12,
+      "axes.labelsize": 11,
+      "xtick.labelsize": 10,
+      "ytick.labelsize": 10,
+      "legend.fontsize": 10,
+      "axes.linewidth": 0.8,
+      "lines.linewidth": 2.0,
+      "lines.markersize": 6.0,
+      "lines.antialiased": true,
+      "patch.antialiased": true,
+      "text.antialiased": true,
+      "lines.solid_capstyle": "round",
+      "lines.dash_capstyle": "round",
+      "lines.solid_joinstyle": "round",
+      "lines.dash_joinstyle": "round",
+      "axes.axisbelow": true,
+      "pdf.fonttype": 42,
+      "ps.fonttype": 42,
+      "svg.fonttype": "none"
+    },
+    "grid_allowance_mode": "flight"
+  },
+  "scope": "Presentation only; existing starts, completions, benefits and metrics are unchanged.",
+  "grid_allowance": "Completion Time minus Start Time, Flight Time and Service Time.",
+  "gantt_display": "Flight segment includes rounding for display only; flight metrics retain original durations.",
+  "events": "Benefit credited at recorded task completions; connecting lines are visual guides."
+}
