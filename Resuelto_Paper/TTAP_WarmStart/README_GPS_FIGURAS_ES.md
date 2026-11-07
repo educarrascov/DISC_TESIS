@@ -76,18 +76,26 @@ Ambas opciones conservan exactamente los mismos puntos y el mismo beneficio
 final. Los dos greedy tienen curvas coincidentes en la corrida publicada; se
 usan líneas y marcadores diferentes para dejar visibles ambos métodos.
 
-Los Gantt usan el inicio, vuelo, servicio y final registrados en cada fila.
-El pequeño resto de redondeo temporal se muestra con un tramo rayado, separado
-del vuelo y del servicio. No se alargan las actividades para rellenarlo.
+Los Gantt integran el margen de redondeo temporal en el tramo de vuelo dibujado.
+La leyenda lo identifica como `Flight + rounding`. Por ejemplo, un vuelo de
+2,1 min más 0,9 min de redondeo ocupa 3 min en la figura, seguido de 6 min de
+servicio hasta el final registrado en 9 min. Las métricas de vuelo conservan
+los 2,1 min originales. La integración es una convención gráfica y mantiene
+los inicios, finales y duraciones de servicio y recuperación registrados.
 Todos los métodos comparten límites de tiempo y los seis helicópteros,
 incluidos los que no tengan actividades en otra configuración.
 
 ```python
-GPS_STYLE["show_grid_allowance"] = False  # Dejar los restos como espacios blancos.
+GPS_STYLE["grid_allowance_mode"] = "flight"  # Integrar redondeo en el vuelo dibujado.
 GPS_STYLE["show_base_labels"] = True
 GPS_STYLE["xlim"] = (0, 125)             # Debe incluir todos los finales.
 GPS_STYLE["benefit_ylim"] = (0, 0.70)    # Debe incluir el beneficio final.
 ```
+
+Para recuperar la representación separada puedes usar
+`GPS_STYLE["grid_allowance_mode"] = "separate"`. En ese modo,
+`show_grid_allowance=True` dibuja el tramado y `False` deja el margen blanco.
+Con el modo `flight` el parámetro `show_grid_allowance` no se utiliza.
 
 ## Archivos generados
 
@@ -120,7 +128,9 @@ PNG ligero en `_preview` para mostrarlas dentro del notebook. Los formatos
 de exportaciones anteriores permanecen si cambias la selección.
 
 También se escriben copias de las métricas, coordenadas de los puntos
-acumulados e intervalos dibujados. Estos archivos se guardan en la carpeta
+acumulados e intervalos dibujados. El CSV de intervalos conserva `Flight Time`
+y añade `Displayed Flight Time` y `Displayed Service Start`, para distinguir
+los datos originales de su representación. Estos archivos se guardan en la carpeta
 nueva; los CSV originales permanecen como fuente de la corrida. El archivo
 `GPS_figures_overleaf.tex` propone captions cuando se exporta PDF.
 

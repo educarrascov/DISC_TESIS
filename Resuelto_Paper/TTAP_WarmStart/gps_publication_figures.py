@@ -25,6 +25,7 @@ DEFAULT_GPS_STYLE = {
     'curve_mode': 'events',  # 'events': original July style; 'step': completion-time jumps.
     'xlim': None,           # Auto: common interval covering all three schedules.
     'benefit_ylim': None,   # Auto: [0, at least 0.70], never truncates the final value.
+    'grid_allowance_mode': 'flight',  # Display only: merge rounding into the flight segment.
     'show_grid_allowance': True,
     'show_base_labels': True,
     'task_label_size': 10.5,
@@ -217,10 +218,26 @@ def _limits(data, style):
     return tuple(xlim), tuple(ylim)
 
 
+def _grid_mode(style):
+    mode = style.get('grid_allowance_mode', 'flight')
+    if mode not in {'flight', 'separate'}:
+        raise ValueError("grid_allowance_mode must be 'flight' or 'separate'")
+    return mode
+
+
+def _displayed_flight(row, style):
+    flight = float(row['Flight Time'])
+    if _grid_mode(style) == 'flight':
+        flight += max(0., float(row['Grid Allowance']))
+    return flight
+
+
 def _gantt_handles(style):
-    values = [('flight', 'Flight'), ('service', 'Task service'), ('recovery', 'Base recovery')]
+    mode = _grid_mode(style)
+    flight_label = 'Flight + rounding' if mode == 'flight' else 'Flight'
+    values = [('flight', flight_label), ('service', 'Task service'), ('recovery', 'Base recovery')]
     handles = [Patch(facecolor=style['colors'][key], edgecolor='none', label=label) for key, label in values]
-    if style['show_grid_allowance']:
+    if mode == 'separate' and style['show_grid_allowance']:
         handles.append(Patch(facecolor=style['colors']['grid_allowance'], edgecolor='#999999',
                              hatch='///', linewidth=.25, label='Time-grid allowance'))
     return handles
@@ -228,16 +245,17 @@ def _gantt_handles(style):
 
 def _draw_gantt(ax, frame, method, data, style, xlim):
     height = style['bar_height']
+    mode = _grid_mode(style)
     for _, row in frame.iterrows():
         h, start = int(row['Helo ID']), float(row['Start Time'])
-        flight, service = float(row['Flight Time']), float(row['Service Time'])
+        flight, service = _displayed_flight(row, style), float(row['Service Time'])
         task = row['Status'] == 'Task Executed'
         for left, width, key in [(start, flight, 'flight'), (start + flight, service, 'service' if task else 'recovery')]:
             if width > 0:
                 ax.add_patch(Rectangle((left, h - height / 2), width, height,
                     facecolor=style['colors'][key], edgecolor='white', linewidth=.20,
                     antialiased=True, joinstyle='round', zorder=3))
-        if row['Grid Allowance'] > 1e-8 and style['show_grid_allowance']:
+        if mode == 'separate' and row['Grid Allowance'] > 1e-8 and style['show_grid_allowance']:
             ax.add_patch(Rectangle((start + flight + service, h - height / 2), row['Grid Allowance'], height,
                 facecolor=style['colors']['grid_allowance'], edgecolor='#999999', linewidth=.2,
                 hatch='///', antialiased=True, zorder=2))
@@ -389,7 +407,7 @@ def export_gps_figures(namespace, style=None, output_directory=None, show=True):
             _draw_gantt(ax, data['frames'][method], method, data, style, xlim)
             ax.set_xlabel('Mission time (min)')
             fig.legend(handles=_gantt_handles(style), loc='upper center', bbox_to_anchor=(.5, .99),
-                       ncol=4 if style['show_grid_allowance'] else 3, frameon=False)
+                       ncol=len(_gantt_handles(style)), frameon=False)
             figures['gantt_' + suffix] = _save(fig, root, 'GPS_gantt_' + suffix, style)
         fig, axes = plt.subplots(3, 1, figsize=style['figures']['gantt_comparison'], sharex=True, sharey=True)
         fig.subplots_adjust(left=.06, right=.99, bottom=.07, top=.91, hspace=.48)
@@ -399,7 +417,7 @@ def export_gps_figures(namespace, style=None, output_directory=None, show=True):
             _draw_gantt(ax, data['frames'][method], method, data, comparison_style, xlim)
         axes[-1].set_xlabel('Mission time (min)')
         fig.legend(handles=_gantt_handles(style), loc='upper center', bbox_to_anchor=(.5, .99),
-                   ncol=4 if style['show_grid_allowance'] else 3, frameon=False)
+                   ncol=len(_gantt_handles(style)), frameon=False)
         figures['gantt_comparison'] = _save(fig, root, 'GPS_gantt_comparison_three_methods', style)
         for index, method in enumerate(data['methods']):
             suffix = ['greedy_benefit', 'greedy_density', 'highs'][index]
@@ -435,7 +453,10 @@ def export_gps_figures(namespace, style=None, output_directory=None, show=True):
             p = selected.groupby('Completion Time')['Benefit'].sum().sort_index()
             events.extend({'Method': method, 'Completion Time': float(t), 'Cumulative Benefit': float(y)}
                           for t, y in zip(p.index, p.cumsum()))
-            timing.append(frame.assign(Method=method))
+            drawn_flight = frame.apply(lambda row: _displayed_flight(row, style), axis=1)
+            timing.append(frame.assign(Method=method,
+                **{'Displayed Flight Time': drawn_flight,
+                   'Displayed Service Start': frame['Start Time'] + drawn_flight}))
     pd.DataFrame(events, columns=['Method', 'Completion Time', 'Cumulative Benefit']).to_csv(root / 'GPS_cumulative_events.csv', index=False)
     if timing:
         pd.concat(timing, ignore_index=True).to_csv(root / 'GPS_drawn_schedule_intervals.csv', index=False)
@@ -447,6 +468,8 @@ def export_gps_figures(namespace, style=None, output_directory=None, show=True):
         'coincident_greedy_cumulative': bool(coincident), 'style': style,
         'scope': 'Presentation only; existing starts, completions, benefits and metrics are unchanged.',
         'grid_allowance': 'Completion Time minus Start Time, Flight Time and Service Time.',
+        'gantt_display': ('Flight segment includes rounding for display only; flight metrics retain original durations.'
+                          if _grid_mode(style) == 'flight' else 'Physical flight and rounding are displayed separately.'),
         'events': 'Benefit credited at recorded task completions; connecting lines are visual guides.'}
     (root / 'GPS_graphics_manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     if show:
@@ -462,16 +485,20 @@ def _captions(root, style):
         return
     line_note = ('Points show cumulative values at task completions; connecting lines are visual guides.'
                  if style['curve_mode'] == 'events' else 'Benefit is credited at recorded task completion times.')
-    grid_note = ('Hatched segments show the time-grid allowance after physical flight and service.'
-                 if style['show_grid_allowance'] else 'Unfilled gaps can contain time-grid allowances.')
+    if _grid_mode(style) == 'flight':
+        grid_note = ('For display, the flight segment includes the time-grid rounding remainder. '
+                     'Reported flight metrics retain the original physical flight durations.')
+    else:
+        grid_note = ('Hatched segments show the time-grid allowance after physical flight and service.'
+                     if style['show_grid_allowance'] else 'Unfilled gaps can contain time-grid allowances.')
     text = r'''% Needs graphicx. Select the figures appropriate for the paper.
 \begin{figure*}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{GPS_gantt_comparison_three_methods.pdf}
 \caption{Schedules for the fixed GPS scenario under Greedy Benefit, Greedy Density
 and HiGHS. All panels use the same mission-time interval and fleet identifiers.
-Recorded activity starts, physical flight and service durations, and completion
-times are preserved. ''' + grid_note + r'''}
+Recorded activity starts and completion times, and service and recovery durations,
+are preserved. ''' + grid_note + r'''}
 \label{fig:gps-gantt-three-methods}
 \end{figure*}
 
