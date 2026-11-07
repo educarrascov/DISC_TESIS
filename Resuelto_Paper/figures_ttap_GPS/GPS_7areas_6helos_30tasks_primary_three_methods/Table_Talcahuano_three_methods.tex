@@ -1,0 +1,21 @@
+\begin{table}[!htbp]
+\centering
+\caption{Talcahuano: comparison on the fixed GPS scenario.}
+\label{tab:gps-three-methods}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}lrrrrc@{}}
+\toprule
+Method & Benefit & Tasks & \makecell{Runtime\\(s)} & \makecell{Shortfall\\(\%)} & \makecell{Optimal\\certified} \\
+\midrule
+\makecell[l]{Greedy\\Benefit} & 0.5161 & 25 & 0.0083 & 12.01 & -- \\
+\makecell[l]{Greedy\\Density} & 0.5161 & 25 & 0.0253 & 12.01 & -- \\
+\makecell[l]{Exact-\\HiGHS} & 0.5865 & 28 & 59.7150 & 0.00 & Yes \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\columnwidth}
+\footnotesize
+All methods use the same fixed scenario and primary objective. There are no repeated-instance means or standard deviations. Runtime includes construction and solving for the MILP. Shortfalls use a certified optimum only; otherwise they are unavailable. Certification uses relative MIP tolerance $10^{-6}$.
+\end{minipage}
+\end{table}

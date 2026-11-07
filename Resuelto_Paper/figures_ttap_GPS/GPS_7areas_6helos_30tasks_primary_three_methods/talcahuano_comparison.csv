@@ -1,0 +1,4 @@
+Method,Objective Mode,Accumulated Benefit,Completed Tasks,Completion Rate,Uncompleted Tasks,Runtime sec,Has Incumbent,Optimal Certified,MIP Gap,Shortfall to Certified Optimum %
+Greedy Benefit,primary,0.5160779921750199,25,0.8333333333333334,"[11, 17, 23, 25, 29]",0.008258417015895247,True,False,,12.011100680345029
+Greedy Density,primary,0.5160779921750199,25,0.8333333333333334,"[11, 17, 23, 25, 29]",0.025274667190387845,True,False,,12.011100680345029
+Exact-HiGHS,primary,0.5865262506582332,28,0.9333333333333333,"[23, 25]",59.714986085891724,True,True,0.0,0.0
