@@ -1,0 +1,42 @@
+\subsection{Experiment B: Larger Network and Heterogeneous Fleet}
+
+\label{subsec:experiment-b}
+
+Experiment B uses six heterogeneous helicopters and seven demand areas, with 20, 30, 40, 50 and 60 tasks and 30 generated instances per size. Greedy Benefit and Greedy Density are compared with three initializations of the same MILP: cold HiGHS, a Benefit start and a Density start. All methods use the primary-output benefit in Section~3.3. Each MILP treatment receives independent solve allowances of 1, 5, 15, 60, 600 and 1800 s. The 1800-s runs provide the main comparison; Section~4.3 examines shorter budgets. Allowances are HiGHS parameters, not hard wall-clock deadlines.
+
+
+
+At 1800 s, cold HiGHS and the Benefit and Density starts certified 116/150, 116/150 and 116/150 instances, respectively. Greedy Benefit had mean paired shortfalls of 11.9--17.4\% across task counts. Greedy Density had mean paired shortfalls of 12.8--17.7\% across task counts.
+
+Shortfalls use the 116/150 instances with a certified reference for this model and objective. Table notes give the counts at each size. Benefit and completed-task means include all generated instances, including uncertified runs; absent plans are scored separately as idle=0.
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{B1_solution_quality_coverage_aware.pdf}
+\caption{Experiment B benefit at the 1800-s MILP allowance. 
+Lines show means over the same 30 instances at each task count; bands show
+one sample standard deviation. The three MILP initialization strategies are drawn separately.}
+\label{fig:expB-quality}
+\end{figure}
+
+
+Among matched runs in which both methods certified, median end-to-end time differences relative to cold were HiGHS + Benefit start: +0.46 s (116 pairs); HiGHS + Density start: +0.22 s (116 pairs).
+
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{B8_computational_effort.pdf}
+\caption{Experiment B computational effort. Panel (a) shows solver
+times with medians and interquartile ranges; panel (b) relates solver time to
+generated state-transition arcs. Marker shape identifies the initialization.
+Filled markers denote certified runs; open markers, when present, denote
+uncertified runs. The dashed line is the 1800-s solver allowance.
+Table~\ref{tab:expB-runtime} includes preparation time.}
+\label{fig:expB-effort}
+\end{figure*}
+
+
+\input{Table_3_Experiment_B_quality.tex}
+
+\input{Table_4_Experiment_B_runtime.tex}

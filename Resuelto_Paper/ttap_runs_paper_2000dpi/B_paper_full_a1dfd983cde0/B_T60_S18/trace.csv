@@ -1,0 +1,47 @@
+Scenario,Seed,Tasks,Method,Start Method,Budget sec,Elapsed solve wall sec,Event,Solver Incumbent Value,Available Value,Configuration,Study Stage,Objective SHA256,Job ID
+B6x7_stress_T60_S18,18,60,HiGHS-1s-Cold,Cold,1.0,0.0,Idle fallback available,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1
+B6x7_stress_T60_S18,18,60,HiGHS-1s-Cold,Cold,1.0,1.3757124580442905,Solve finished,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1
+B6x7_stress_T60_S18,18,60,HiGHS-1s-GBStart,GBStart,1.0,0.0,Validated start available,,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:1
+B6x7_stress_T60_S18,18,60,HiGHS-1s-GBStart,GBStart,1.0,1.4130134999286383,Solve finished,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:1
+B6x7_stress_T60_S18,18,60,HiGHS-1s-GDStart,GDStart,1.0,0.0,Validated start available,,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1
+B6x7_stress_T60_S18,18,60,HiGHS-1s-GDStart,GDStart,1.0,1.3248106248211116,Solve finished,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1
+B6x7_stress_T60_S18,18,60,HiGHS-5s-Cold,Cold,5.0,0.0,Idle fallback available,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:5
+B6x7_stress_T60_S18,18,60,HiGHS-5s-Cold,Cold,5.0,6.108350959140807,Solve finished,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:5
+B6x7_stress_T60_S18,18,60,HiGHS-5s-GBStart,GBStart,5.0,0.0,Validated start available,,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:5
+B6x7_stress_T60_S18,18,60,HiGHS-5s-GBStart,GBStart,5.0,5.306003791978583,Solve finished,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:5
+B6x7_stress_T60_S18,18,60,HiGHS-5s-GDStart,GDStart,5.0,0.0,Validated start available,,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:5
+B6x7_stress_T60_S18,18,60,HiGHS-5s-GDStart,GDStart,5.0,6.111962625058368,Solve finished,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:5
+B6x7_stress_T60_S18,18,60,HiGHS-15s-Cold,Cold,15.0,0.0,Idle fallback available,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:15
+B6x7_stress_T60_S18,18,60,HiGHS-15s-Cold,Cold,15.0,15.843966582790017,Solve finished,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:15
+B6x7_stress_T60_S18,18,60,HiGHS-15s-GBStart,GBStart,15.0,0.0,Validated start available,,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:15
+B6x7_stress_T60_S18,18,60,HiGHS-15s-GBStart,GBStart,15.0,15.819472208153456,Solve finished,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:15
+B6x7_stress_T60_S18,18,60,HiGHS-15s-GDStart,GDStart,15.0,0.0,Validated start available,,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:15
+B6x7_stress_T60_S18,18,60,HiGHS-15s-GDStart,GDStart,15.0,15.96805370785296,Solve finished,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:15
+B6x7_stress_T60_S18,18,60,HiGHS-60s-Cold,Cold,60.0,0.0,Idle fallback available,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:60
+B6x7_stress_T60_S18,18,60,HiGHS-60s-Cold,Cold,60.0,61.39392274990678,Solve finished,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:60
+B6x7_stress_T60_S18,18,60,HiGHS-60s-GBStart,GBStart,60.0,0.0,Validated start available,,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:60
+B6x7_stress_T60_S18,18,60,HiGHS-60s-GBStart,GBStart,60.0,61.74557779193856,Solve finished,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:60
+B6x7_stress_T60_S18,18,60,HiGHS-60s-GDStart,GDStart,60.0,0.0,Validated start available,,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:60
+B6x7_stress_T60_S18,18,60,HiGHS-60s-GDStart,GDStart,60.0,61.32950170803815,Solve finished,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:60
+B6x7_stress_T60_S18,18,60,HiGHS-600s-Cold,Cold,600.0,0.0,Idle fallback available,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-Cold,Cold,600.0,392.57474100007676,HiGHS improving incumbent,-0.0,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-Cold,Cold,600.0,600.6421392501798,Solve finished,-0.0,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-GBStart,GBStart,600.0,0.0,Validated start available,,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-GBStart,GBStart,600.0,75.01768362498842,HiGHS improving incumbent,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-GBStart,GBStart,600.0,600.8232499579899,Solve finished,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-GDStart,GDStart,600.0,0.0,Validated start available,,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-GDStart,GDStart,600.0,74.49378412496299,HiGHS improving incumbent,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:600
+B6x7_stress_T60_S18,18,60,HiGHS-600s-GDStart,GDStart,600.0,600.7516434169374,Solve finished,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:600
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-Cold,Cold,1800.0,0.0,Idle fallback available,,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-Cold,Cold,1800.0,386.252087083878,HiGHS improving incumbent,-0.0,0.0,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-Cold,Cold,1800.0,1579.3769900419284,HiGHS improving incumbent,0.29975499764253627,0.29975499764253627,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-Cold,Cold,1800.0,1800.342204833869,HiGHS improving incumbent,0.3305425875783264,0.3305425875783264,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-Cold,Cold,1800.0,1801.2208337089978,Solve finished,0.3305425875783264,0.3305425875783264,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:Cold:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GBStart,GBStart,1800.0,0.0,Validated start available,,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GBStart,GBStart,1800.0,74.68055024999194,HiGHS improving incumbent,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GBStart,GBStart,1800.0,1828.5226442920975,Solve finished,0.30675173849254217,0.3067517384925422,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GBStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GDStart,GDStart,1800.0,0.0,Validated start available,,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GDStart,GDStart,1800.0,74.51697924989276,HiGHS improving incumbent,0.2939608550910045,0.29396085509100456,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GDStart,GDStart,1800.0,1582.6368386249524,HiGHS improving incumbent,0.29975499764253627,0.29975499764253627,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GDStart,GDStart,1800.0,1801.569675958017,HiGHS improving incumbent,0.3305425875783264,0.3305425875783264,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1800
+B6x7_stress_T60_S18,18,60,HiGHS-1800s-GDStart,GDStart,1800.0,1802.371804291848,Solve finished,0.3305425875783264,0.3305425875783264,B,Warm,daf024202b6384bf85c83dd1b43ab5285be5abbbc0280aedbe8dc7989a44becf,Warm:GDStart:1800
